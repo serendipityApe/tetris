@@ -1,4 +1,4 @@
-import { gameCol, gameRow } from "../utils";
+import { gameCol, gameRow } from ".";
 
 
 export function initMap(map: number[][], setMap: React.Dispatch<React.SetStateAction<number[][]>>) {
