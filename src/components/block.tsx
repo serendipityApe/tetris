@@ -9,6 +9,7 @@ export const Block = (props: Props) => {
       //5FB095   34776C 1E7870 218C47 597961 5A8D8A
     0: "#719A8F",
     1: "#1F8258",
+    [-1]: '#5FB095',
   };
   return (
     <div

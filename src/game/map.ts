@@ -1,7 +1,7 @@
 import { gameCol, gameRow } from ".";
 
 
-export function initMap(map: number[][], setMap: React.Dispatch<React.SetStateAction<number[][]>>) {
+export function initMap(map: number[][], setMap: Function) {
     let _map = [];
     for (let i = 0; i < gameCol; i++) {
         const arr: Array<number> = [];
@@ -11,4 +11,5 @@ export function initMap(map: number[][], setMap: React.Dispatch<React.SetStateAc
         _map.push(arr);
     }
     setMap(_map);
+    // setMap(_map);
 }
