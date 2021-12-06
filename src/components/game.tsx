@@ -56,6 +56,11 @@ const Game: React.FC<Props> = (props) => {
         case "ArrowRight":
           activeBox.x++;
           break;
+        case "ArrowUp":
+          console.log(activeBox)
+          activeBox.rotate();
+          break;
+        default: break;
       }
     });
     addTicker(handlerTicker);
