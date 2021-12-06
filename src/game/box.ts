@@ -19,6 +19,7 @@ export class Box implements BoxType {
         ];
     }
 }
+//使用策略模式控制box旋转方案
 const boxInfos: { [key: number]: { type: number; shape: number[][] } } = {
     1: {
         type: 1,
@@ -45,6 +46,14 @@ const boxInfos: { [key: number]: { type: number; shape: number[][] } } = {
         ],
     },
 };
+
+//使用工厂模式创建Box
+export function createBox() {
+    const { shape, type } = getRandomBoxInfo();
+    const box = new Box(type);
+    box.shape = shape;
+    return box;
+}
 export function createBoxByType(type: number) {
     const box = new Box(type);
     const { shape } = boxInfos[type];
@@ -52,4 +61,9 @@ export function createBoxByType(type: number) {
     box.shape = shape;
 
     return box;
+}
+function getRandomBoxInfo(){
+    const max = Object.keys(boxInfos).length;
+    const type = Math.floor(Math.random() * max + 1);
+    return boxInfos[type];
 }

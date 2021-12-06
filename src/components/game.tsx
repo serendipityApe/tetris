@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { startGame } from "../game";
 import { Block } from "./block";
 import useUpdate from "../myHooks/useUpdate";
-import { createBoxByType } from "../game/box";
+import { createBox } from "../game/box";
 import render from "../game/render";
 
 import { addTicker } from "../game/ticker";
 import intervalTimer from "../game/utils/intervalTimer";
-import { hitBottomBorder } from "../game/hit";
-import deepClone from "../game/utils/deepClone";
+import { hitBottomBorder, hitBottomBox } from "../game/hit";
+import { addBoxtoMap, eliminateLine } from "../game/map";
 interface Props {}
 const Game: React.FC<Props> = (props) => {
   const [isStarted, setIsStarted] = useState<boolean>(false);
@@ -21,27 +21,23 @@ const Game: React.FC<Props> = (props) => {
   };
   useEffect(() => {
     // startGame(map, setMap);
-    startGame(mapRef.current, setMapRef);
+    startGame(setMapRef);
     // eslint-disable-next-line
     setIsStarted(true);
   }, []);
   useUpdate(() => {
-    let activeBox = createBoxByType(1);
+    let activeBox = createBox();
     render(activeBox, mapRef, setMapRef);
     const isMoveDown = intervalTimer();
     function handlerTicker(n: number) {
       if (isMoveDown(n, 300)) {
-        if (hitBottomBorder(activeBox, mapRef.current)) {
-          let _map: number[][] = deepClone(map);
-          for (let i = 0; i < activeBox.shape.length; i++) {
-            for (let j = 0; j < activeBox.shape[0].length; j++) {
-              const x = activeBox.x + j;
-              const y = activeBox.y + i;
-              _map[y][x] = -1;
-            }
-          }
-          setMapRef(_map);
-          activeBox = createBoxByType(1);
+        if (
+          hitBottomBorder(activeBox, mapRef.current) ||
+          hitBottomBox(activeBox, mapRef.current)
+        ) {
+          addBoxtoMap(activeBox, mapRef, setMapRef);
+          eliminateLine(mapRef, setMapRef);
+          activeBox = createBox();
           return;
         }
         activeBox.y++;
@@ -50,21 +46,16 @@ const Game: React.FC<Props> = (props) => {
     }
 
     window.addEventListener("keydown", (e) => {
-      if (e.code === "ArrowDown") {
-        if (hitBottomBorder(activeBox, mapRef.current)) {
-          let _map: number[][] = deepClone(map);
-          for (let i = 0; i < activeBox.shape.length; i++) {
-            for (let j = 0; j < activeBox.shape[0].length; j++) {
-              const x = activeBox.x + j;
-              const y = activeBox.y + i;
-              _map[y][x] = -1;
-            }
-          }
-          setMapRef(_map);
-          activeBox = createBoxByType(1);
-          return;
-        }
-        activeBox.y++;
+      switch (e.code) {
+        case "ArrowDown":
+          activeBox.y++;
+          break;
+        case "ArrowLeft":
+          activeBox.x--;
+          break;
+        case "ArrowRight":
+          activeBox.x++;
+          break;
       }
     });
     addTicker(handlerTicker);
