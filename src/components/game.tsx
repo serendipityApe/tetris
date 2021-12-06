@@ -5,6 +5,9 @@ import useUpdate from "../myHooks/useUpdate";
 import { createBoxByType } from "../game/box";
 import render from "../game/render";
 import { addTicker } from "../game/ticker";
+import intervalTimer from "../game/utils/intervalTimer";
+import { getBoxBottomPoints } from "../game/matrix";
+import { hitBottomBorder } from "../game/hit";
 interface Props {}
 const Game: React.FC<Props> = (props) => {
   const [isStarted, setIsStarted] = useState<boolean>(false);
@@ -15,29 +18,23 @@ const Game: React.FC<Props> = (props) => {
     setIsStarted(true);
   }, []);
   useUpdate(() => {
-    let box = createBoxByType(1);
-    render(box, map, setMap);
+    let activeBox = createBoxByType(1);
+    render(activeBox, map, setMap);
     const isMoveDown = intervalTimer();
     function handlerTicker(n: number) {
-      if (isMoveDown(n, 1000)) {
-        box.y++;
-      }
-      render(box, map, setMap);
-    }
-    function intervalTimer() {
-      let t = 0;
-      return (n: number, intervalTime: number) => {
-        t += n;
-        if (t >= intervalTime) {
-          t = 0;
-          return true;
+      if (isMoveDown(n, 300)) {
+        if (hitBottomBorder(activeBox, map)) {
+          activeBox = createBoxByType(1);
+          return;
         }
-        return false;
-      };
+        activeBox.y++;
+      }
+      render(activeBox, map, setMap);
     }
+
     window.addEventListener("keydown", (e) => {
       if (e.code === "ArrowDown") {
-        box.y++;
+        activeBox.y++;
       }
     });
     addTicker(handlerTicker);
