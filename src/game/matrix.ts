@@ -24,7 +24,30 @@ export function getBoxBottomPoints(matrix: number[][]) {
     return points;
 }
 export function getBoxLeftPoints(matrix: number[][]) {
+    //[0,1,1]
+    //[1,1,0]
+    //  获取左边届的点，即 [{x:0,y:1},{x:1,y:0}]
     let col = 0;
+    const points: any[] = [];
+    let flag = new Map<number, boolean>();
+    function getEffectiveLastRow(col: number) {
+        for (let i = 0; i < matrix.length; i++) {
+            if (matrix[i][col] > 0) {
+                if (!flag.has(i)) { 
+                    flag.set(i, true)
+                    points.push({ x: col, y: i })
+                }
+            }
+        }
+    }
+    getEffectiveLastRow(col);
+    while (points.length < matrix.length && ++col <= matrix.length - 1) {
+        getEffectiveLastRow(col);
+    }
+    return points;
+}
+export function getBoxRightPoints(matrix: number[][]) {
+    let col = matrix.length - 1;
     const points: any[] = [];
     let flag = new Map<number, boolean>();
     function getEffectiveLastRow(col: number) {
@@ -38,7 +61,7 @@ export function getBoxLeftPoints(matrix: number[][]) {
         }
     }
     getEffectiveLastRow(col);
-    while (points.length < matrix.length && ++col <= matrix.length - 1) {
+    while (points.length < matrix.length && --col >= 0) {
         getEffectiveLastRow(col);
     }
     return points;
@@ -61,4 +84,25 @@ export function rotate(matrix: number[][]) {
     }
 
     return temp;
+}
+
+//算法可优化?
+export function getBoxLeftPoints2(matrix: number[][]) {
+    const points: any[] = [];
+    function getEffectiveLastRow() {
+        for (let i = 0; i < matrix.length; i++) {
+            if (points.length < matrix.length) {
+                for (let j = 0; j < matrix[0].length; j++) {
+                    if (matrix[i][j] > 0) {
+                        points.push({ x: j, y: i });
+                        break;
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+    }
+    getEffectiveLastRow();
+    return points;
 }
