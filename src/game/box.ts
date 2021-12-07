@@ -5,6 +5,8 @@ export interface BoxType {
     y: number;
     shape: number[][];
     type: number;
+    rotate: Function;
+    setRotate: Function
 }
 export class Box implements BoxType {
     x: number;

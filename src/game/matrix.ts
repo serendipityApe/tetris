@@ -1,4 +1,3 @@
-import { BoxType } from "./box";
 
 export function getBoxBottomPoints(matrix: number[][]) {
     const row = matrix.length;

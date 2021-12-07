@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { initGame } from "../game";
+import { initSelfGame } from "../game";
 import { Block } from "./block";
-// import useUpdate from "../myHooks/useUpdate";
-// import { createBox } from "../game/box";
-// import render from "../game/render";
-
-// import { addTicker } from "../game/ticker";
-// import intervalTimer from "../game/utils/intervalTimer";
-// import { hitBottomBorder, hitBottomBox } from "../game/hit";
-// import { addBoxtoMap, eliminateLine } from "../game/map";
 interface Props {}
 const Game: React.FC<Props> = (props) => {
   // const [isStarted, setIsStarted] = useState<boolean>(false);
@@ -20,10 +12,7 @@ const Game: React.FC<Props> = (props) => {
     setMap(mapRef.current);
   };
   useEffect(() => {
-    // startGame(map, setMap);
-    initGame(mapRef, setMapRef);
-    // eslint-disable-next-line
-    // setIsStarted(true);
+    initSelfGame(mapRef, setMapRef);
   }, []);
   // useUpdate(() => {
   //   let activeBox = createBox();
@@ -67,7 +56,7 @@ const Game: React.FC<Props> = (props) => {
   // }, [isStarted]);
   return (
     <div>
-      {mapRef.current.map((item, i) => {
+      {map.map((item, i) => {
         return (
           <div style={{ display: "flex" }} key={i}>
             {item.map((item2, j) => {
