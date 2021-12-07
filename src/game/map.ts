@@ -22,7 +22,7 @@ export function addBoxtoMap(box: BoxType, map: React.MutableRefObject<number[][]
         for (let j = 0; j < box.shape[0].length; j++) {
             const x = box.x + j;
             const y = box.y + i;
-            if(_map[y][x] > 0){
+            if (y < _map.length && _map[y][x] > 0) {
                 _map[y][x] = -1;
             }
         }

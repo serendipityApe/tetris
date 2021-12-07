@@ -28,6 +28,7 @@ export class Box implements BoxType {
         const rotateHandler: Function = this._rotates[this._rotateIndex];
         if (!rotateHandler) return;
         this.shape = rotateHandler(this.shape);
+        console.log(this.shape);
         this._rotateIndex++;
         if (this._rotateIndex >= this._rotates.length) {
             this._rotateIndex = 0;
@@ -87,6 +88,7 @@ export function createBoxByType(type: number) {
 }
 function getRandomBoxInfo() {
     const max = Object.keys(boxInfos).length;
+    // const type = 3;
     const type = Math.floor(Math.random() * max + 1);
     return boxInfos[type];
 }
