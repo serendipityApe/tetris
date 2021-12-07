@@ -1,5 +1,5 @@
 import { BoxType } from "./box";
-import { getBoxBottomPoints } from "./matrix";
+import { getBoxBottomPoints, getBoxLeftPoints } from "./matrix";
 
 export function hitBottomBorder(box: BoxType, map: number[][]) {
     const points = getBoxBottomPoints(box.shape);
@@ -23,4 +23,21 @@ export function hitBottomBox(box: BoxType, map: number[][]) {
 
         return map[row][col] < 0;
     });
+}
+// export function hitLeftBorder(box: BoxType, map: number[][]) {
+//     const points = getBoxLeftPoints(box.shape);
+//     return points.some((point) => {
+//         return point.x + box.x <= 0
+//     })
+// }
+
+export function hitLeftBoxAndBorder(box: BoxType, map: number[][]) {
+    const points = getBoxLeftPoints(box.shape);
+    console.log(points)
+    return points.some((point) => {
+        const col = point.x + box.x;
+        const row = point.y + box.y;
+        console.log(`${row},${col-1}`);
+        return col <= 0 || map[row][col-1] < 0;
+    })
 }

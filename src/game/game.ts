@@ -1,7 +1,7 @@
 import { BoxType, createBox } from "./box";
 import render from "./render";
 
-import { hitBottomBorder, hitBottomBox } from "./hit";
+import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder } from "./hit";
 import { addBoxtoMap, eliminateLine } from "./map";
 export * from './config'
 
@@ -31,6 +31,9 @@ export class Game {
         this._activeBox.y++;
     }
     moveBoxToLeft() {
+        if (hitLeftBoxAndBorder(this._activeBox, this._mapRef.current)) {
+            return;
+        }
         this._activeBox.x--;
         //检查左侧碰撞
     }

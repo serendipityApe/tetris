@@ -25,19 +25,16 @@ export function getBoxLeftPoints(matrix: number[][]) {
     let col = 0;
     const points: any[] = [];
     function getEffectiveLastRow(col: number) {
-        for (let j = 0; j < matrix[col].length - 1; j++) {
-            if (matrix[col][j] > 0) {
-                points.push({ x: col, y: j })
+        for (let i = 0; i < matrix.length; i++) {
+            if (matrix[i][col] > 0) {
+                points.push({ x: col, y: i })
             }
         }
     }
     getEffectiveLastRow(col);
-    //[1,1,1]
-    //[1,0,0]
-    //[0,0,0]  改行为无效行，要向上继续检测
 
     //如果最后一行为空，向上继续检测直到检测到有效行
-    while (!points.length && col++ <= matrix.length - 1) {
+    while (!points.length && ++col <= matrix.length - 1) {
         getEffectiveLastRow(col);
     }
     return points;
