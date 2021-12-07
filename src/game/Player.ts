@@ -1,7 +1,5 @@
 import { createBox } from "./box";
-import { Game, moveDownTimeInterval } from "./game";
-import { addTicker } from "./ticker";
-import intervalTimer from "./utils/intervalTimer";
+import { Game } from "./game";
 
 export class Player {
     private _game: Game;
@@ -15,14 +13,7 @@ export class Player {
         return box;
     }
     start() {
-        addTicker(this.handleBoxMoveDown.bind(this));
-    }
-    _isDown = intervalTimer(moveDownTimeInterval);
-    handleBoxMoveDown(n: number) {
-        if (!this._game) return;
-        if (this._isDown(n)) {
-            this._game.moveBoxToDown();
-        }
+        this._game.start();
     }
 
     handlerKeyDown(e: KeyboardEvent) {

@@ -2,17 +2,23 @@
 let startTime = Date.now();
 function handleFrame() {
     tickers.forEach((ticker) => {
-        ticker(Date.now() - startTime);
+        ticker.fn.call(ticker.listener, (Date.now() - startTime));
     });
-
     startTime = Date.now();
     requestAnimationFrame(handleFrame);
 }
 
 requestAnimationFrame(handleFrame);
 
-type Ticker = Function;
-const tickers: Array<Ticker> = [];
-export function addTicker(ticker: Ticker) {
-    tickers.push(ticker);
+const tickers: Array<{ fn: Function; listener: any }> = [];
+export function addTicker(fn: Function, listener: any) {
+    tickers.push({ fn, listener });
+    
+}
+export function removeTicker(fn: Function, listeners: any) {
+    for (let i = 0; i < tickers.length; i++) {
+        if (tickers[i].fn === fn && tickers[i].listener === listeners) {
+            tickers.splice(i, 1);
+        }
+    }
 }

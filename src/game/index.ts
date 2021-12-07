@@ -1,6 +1,5 @@
 import { initMap } from './map'
 import { createBox } from "./box";
-import { addTicker } from './ticker';
 import { Game } from './game';
 import { Player } from './Player';
 export * from './config'
@@ -14,15 +13,8 @@ export function initSelfGame(mapRef: React.MutableRefObject<number[][]>, setMapR
     player = new Player(selfGame);
 }
 
-let isStarted = false;
+// let isStarted = false;
 export function startGame() {
-    isStarted = true;
+    // isStarted = true;
     player.start();
 }
-
-//主循环
-addTicker(() => {
-    if (!isStarted) return;
-    selfGame.render();
-    // rivalGame.render();
-});

@@ -68,6 +68,25 @@ const boxInfos: { [key: number]: { type: number; shape: number[][]; rotateStrate
         ],
         rotateStrategy: [rotate, rotate, rotate, rotate],
     },
+    4: {
+        type: 4,
+        shape: [
+            [0, 0, 0],
+            [0, 4, 0],
+            [4, 4, 4],
+        ],
+        rotateStrategy: [rotate, rotate, rotate, rotate],
+    },
+
+    // 5: {
+    //     type: 5,
+    //     shape: [
+    //         [0, 0, 6],
+    //         [0, 0, 6],
+    //         [0, 6, 6],
+    //     ],
+    //     rotateStrategy: [rotate, rotate, rotate, rotate],
+    // },
 };
 
 //使用工厂模式创建Box

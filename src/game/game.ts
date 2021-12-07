@@ -3,6 +3,9 @@ import render from "./render";
 
 import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow } from "./hit";
 import { addBoxtoMap, eliminateLine } from "./map";
+import intervalTimer from "./utils/intervalTimer";
+import { moveDownTimeInterval } from ".";
+import { addTicker, removeTicker } from "./ticker";
 export * from './config'
 
 export class Game {
@@ -15,6 +18,22 @@ export class Game {
         this._activeBox = box;
         this._setMapRef = setMapRef;
     }
+    start() {
+        addTicker(this.handleTicker, this);
+    }
+    //游戏开始每帧执行的函数，包括box向下移动与render;
+    handleTicker(i: number) {
+        console.log('执行')
+        this.handleBoxMoveDown(i);
+        render(this._activeBox, this._mapRef, this._setMapRef)
+    }
+    _isDown = intervalTimer(moveDownTimeInterval);
+    handleBoxMoveDown(n: number) {
+        // if (!this._game) return;
+        if (this._isDown(n)) {
+            this.moveBoxToDown();
+        }
+    }
     render() {
         render(this._activeBox, this._mapRef, this._setMapRef);
     }
@@ -25,12 +44,12 @@ export class Game {
         ) {
             addBoxtoMap(this._activeBox, this._mapRef, this._setMapRef);
             eliminateLine(this._mapRef, this._setMapRef);
-            if(isBoxOverFlow(this._mapRef.current)){
+            if (isBoxOverFlow(this._mapRef.current)) {
+                removeTicker(this.handleTicker, this);
                 alert('游戏结束');
                 return;
             }
             this._activeBox = createBox();
-            // 在此处监测游戏是否结束
             return;
         }
         this._activeBox.y++;

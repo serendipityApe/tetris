@@ -12,7 +12,7 @@ function _render(box: BoxType, map: React.MutableRefObject<number[][]>, setMap: 
             const row = i + box.y;
             const col = j + box.x;
             if (box.shape[i][j] > 0) {
-                _map[row][col] = 1;
+                _map[row][col] = box.type;
             }
         }
     }

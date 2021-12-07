@@ -6,10 +6,14 @@ interface Props {
 
 export const Block = (props: Props) => {
   const typeToColorMap: { [key: number]: string } = {
-      //5FB095   34776C 1E7870 218C47 597961 5A8D8A
-    0: "#719A8F",
+      //5FB095   34776C 1E7870 218C47 597961 5A8D8A  719A8F
+      // B2BF88 CADCB6
+    0: "#CADCB6",
     1: "#1F8258",
-    [-1]: '#5FB095',
+    2: "#34776C",
+    3: "#1E7870",
+    4: "#218C47",
+    [-1]: '#1E7870',
   };
   return (
     <div
@@ -21,7 +25,7 @@ export const Block = (props: Props) => {
         color: "whitesmoke"
       }}
     >
-      {props.type}
+      {/* {props.type} */}
     </div>
   );
 };
