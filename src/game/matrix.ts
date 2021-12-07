@@ -1,40 +1,44 @@
 
 export function getBoxBottomPoints(matrix: number[][]) {
+    //[1,1,1]
+    //[1,0,0]
+    //[0,0,0]  获取宏观上的所有底部点，即 [{x:0,y:1},{x:1,y:0},{x:2,y:0}]
     let row = matrix.length - 1;
     const points: any[] = [];
+    let flag = new Map<number, boolean>();
     function getEffectiveLastRow(row: number) {
         matrix[row].forEach((v, j) => {
             if (matrix[row][j] > 0) {
-                points.push({ x: j, y: row })
+                if (!flag.has(j)) {
+                    flag.set(j, true);
+                    points.push({ x: j, y: row })
+                }
             }
         })
     }
     getEffectiveLastRow(row);
-    //[1,1,1]
-    //[1,0,0]
-    //[0,0,0]  改行为无效行，要向上继续检测
-
-    //如果最后一行为空，向上继续检测直到检测到有效行
-    while (!points.length && --row >= 0) {
+    //如果点未获取完，向上继续检测直到获取所有点
+    while (points.length < matrix[0].length && --row >= 0) {
         getEffectiveLastRow(row);
     }
     return points;
 }
-
 export function getBoxLeftPoints(matrix: number[][]) {
     let col = 0;
     const points: any[] = [];
+    let flag = new Map<number, boolean>();
     function getEffectiveLastRow(col: number) {
         for (let i = 0; i < matrix.length; i++) {
             if (matrix[i][col] > 0) {
-                points.push({ x: col, y: i })
+                if (!flag.has(i)) {
+                    flag.set(i, true)
+                    points.push({ x: col, y: i })
+                }
             }
         }
     }
     getEffectiveLastRow(col);
-
-    //如果最后一行为空，向上继续检测直到检测到有效行
-    while (!points.length && ++col <= matrix.length - 1) {
+    while (points.length < matrix.length && ++col <= matrix.length - 1) {
         getEffectiveLastRow(col);
     }
     return points;
