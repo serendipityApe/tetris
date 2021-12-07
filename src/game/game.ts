@@ -1,7 +1,7 @@
 import { BoxType, createBox } from "./box";
 import render from "./render";
 
-import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder } from "./hit";
+import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow } from "./hit";
 import { addBoxtoMap, eliminateLine } from "./map";
 export * from './config'
 
@@ -25,6 +25,10 @@ export class Game {
         ) {
             addBoxtoMap(this._activeBox, this._mapRef, this._setMapRef);
             eliminateLine(this._mapRef, this._setMapRef);
+            if(isBoxOverFlow(this._mapRef.current)){
+                alert('游戏结束');
+                return;
+            }
             this._activeBox = createBox();
             // 在此处监测游戏是否结束
             return;

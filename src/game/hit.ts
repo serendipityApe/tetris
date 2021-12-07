@@ -49,3 +49,10 @@ export function hitRightBoxAndBorder(box: BoxType, map: number[][]) {
         return col >= map[0].length - 1 || map[row][col + 1] < 0;
     })
 }
+
+export function isBoxOverFlow(map: number[][]) {
+    const row = 0;
+    return map[row].some((point) => {
+        return point < 0
+    })
+}
