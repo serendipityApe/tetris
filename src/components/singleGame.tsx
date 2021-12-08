@@ -1,6 +1,6 @@
 import React from "react";
-import Game from "./game";
-import { forceOverGame } from "../game";
+import Game from "./game/game";
+import { forceOverSelfGame } from "../game";
 interface Props {}
 
 export const SingleGame = (props: Props) => {
@@ -9,7 +9,7 @@ export const SingleGame = (props: Props) => {
       <div
         className="return"
         onClick={() => {
-          forceOverGame();
+          forceOverSelfGame();
         }}
       >
         <svg

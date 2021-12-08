@@ -18,7 +18,9 @@ export function startGame() {
     // isStarted = true;
     player.start();
 }
-
+export function operateInMobile(order: string) {
+    player.handlerButton(order)
+}
 let _gameoverHandler: Function;
 export function setGameoverHandler(fn: Function) {
     _gameoverHandler = fn;
@@ -27,6 +29,6 @@ export function getGameoverHandler() {
     return _gameoverHandler;
 }
 
-export function forceOverGame(){
+export function forceOverSelfGame() {
     selfGame.forceOverGame();
 }
