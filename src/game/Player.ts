@@ -1,6 +1,7 @@
 import { randomCreateBox } from "./box";
 import { Game } from "./game";
 import isMobile from './utils/checkServices'
+import { message } from "./message";
 export class Player {
     private _game: Game;
     constructor(game: Game) {
@@ -15,6 +16,8 @@ export class Player {
     }
     createBoxStrategy() {
         const box = randomCreateBox();
+        message.emit('createBox', box.type);
+        console.log('发送createBox')
         return box;
     }
     start() {
@@ -42,15 +45,19 @@ export class Player {
         switch (e.code) {
             case "ArrowDown":
                 this._game.moveBoxToDown();
+                message.emit('moveBoxToDown')
                 break;
             case "ArrowLeft":
                 this._game.moveBoxToLeft();
+                message.emit('moveBoxToLeft')
                 break;
             case "ArrowRight":
                 this._game.moveBoxToRight();
+                message.emit('moveBoxToRight')
                 break;
             case "ArrowUp":
                 this._game.rotateBox();
+                message.emit('rotateBox')
                 break;
             default: break;
         }

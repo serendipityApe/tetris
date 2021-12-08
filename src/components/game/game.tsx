@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { initSelfGame, operateInMobile } from "../../game";
+import { initSelfGame, initRivalGame, operateInMobile } from "../../game";
 import { Block } from "../block";
 import "./game.scss";
 import isMobile from "../../game/utils/checkServices";
-interface Props {}
+interface Props {
+  type: string;
+}
 const Game: React.FC<Props> = (props) => {
   // const [isStarted, setIsStarted] = useState<boolean>(false);
   const mapRef = React.useRef<number[][]>([]);
@@ -15,7 +17,11 @@ const Game: React.FC<Props> = (props) => {
     setMap(mapRef.current);
   };
   useEffect(() => {
-    initSelfGame(mapRef, setMapRef);
+    if (props.type === "self") {
+      initSelfGame(mapRef, setMapRef);
+    } else {
+      initRivalGame(mapRef, setMapRef);
+    }
     return () => {
       console.log("注销");
     };

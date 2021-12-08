@@ -3,7 +3,7 @@ import Game from "./game/game";
 import { forceOverSelfGame } from "../game";
 interface Props {}
 
-export const SingleGame = (props: Props) => {
+export const MultGame = (props: Props) => {
   return (
     <div>
       <div
@@ -31,13 +31,20 @@ export const SingleGame = (props: Props) => {
       <div
         className="gaming"
         style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
+          display: "flex",
+          justifyContent: "space-around",
+          //   position: "absolute",
+          //   top: "50%",
+          //   left: "50%",
+          //   transform: "translate(-50%,-50%)",
         }}
       >
+        <div>
+
         <Game type="self"></Game>
+        我自己
+        </div>
+        <Game type="rival"></Game>
       </div>
     </div>
   );

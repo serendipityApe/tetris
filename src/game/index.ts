@@ -2,21 +2,39 @@ import { initMap } from './map'
 import { randomCreateBox } from "./box";
 import { Game } from './game';
 import { Player } from './Player';
+import { initMessage } from './message';
+import { Rival } from './Rival';
 export * from './config'
 
+
+export function initGame() {
+    initMessage();
+}
 let selfGame: Game;
+
 let player: Player;
 export function initSelfGame(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
     const box = randomCreateBox();
     initMap(setMapRef);
-    selfGame = new Game(box, mapRef, setMapRef);
+    selfGame = new Game(mapRef, setMapRef);
     player = new Player(selfGame);
 }
+
+let rivalGame: Game;
+let rivalPlayer: Rival
+export function initRivalGame(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
+    const box = randomCreateBox();
+    initMap(setMapRef);
+    rivalGame = new Game(mapRef, setMapRef);
+    rivalPlayer = new Rival(rivalGame);
+}
+
 
 // let isStarted = false;
 export function startGame() {
     // isStarted = true;
     player.start();
+    // rivalPlayer && rivalPlayer.start(); 到第一次接收消息start（）;
 }
 export function operateInMobile(order: string) {
     player.handlerButton(order)

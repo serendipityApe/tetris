@@ -7,19 +7,21 @@ import intervalTimer from "./utils/intervalTimer";
 import { moveDownTimeInterval } from ".";
 import { addTicker, removeTicker } from "./ticker";
 import { getGameoverHandler } from './'
+import { message } from "./message";
 export * from './config'
 
 export class Game {
     private _mapRef: React.MutableRefObject<number[][]>;
     private _setMapRef: Function;
-    private _activeBox: BoxType;
+    private _activeBox: any; // -> boxtype
     private _createBoxStrategy: any;
-    constructor(box: BoxType, mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
+    constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
         this._mapRef = mapRef;
-        this._activeBox = box;
+        // this._activeBox = box;
         this._setMapRef = setMapRef;
     }
     start() {
+        this.addBox();
         addTicker(this.handleTicker, this);
     }
     //游戏开始每帧执行的函数，包括box向下移动与render;
@@ -28,10 +30,15 @@ export class Game {
         render(this._activeBox, this._mapRef, this._setMapRef)
     }
     _isDown = intervalTimer(moveDownTimeInterval);
+    _isAutoDown = true;
     handleBoxMoveDown(n: number) {
         // if (!this._game) return;
-        if (this._isDown(n)) {
-            this.moveBoxToDown();
+        if (this._isAutoDown) {
+
+            if (this._isDown(n)) {
+                this.moveBoxToDown();
+                message.emit('moveBoxToDown', () => { })
+            }
         }
     }
     render() {
@@ -50,10 +57,15 @@ export class Game {
                 getGameoverHandler()();
                 return;
             }
-            this._activeBox = randomCreateBox();
+            // this._activeBox = randomCreateBox();
+            // console.log('创建')
+            this.addBox();
             return;
         }
         this._activeBox.y++;
+    }
+    addBox() {
+        this._activeBox = this._createBoxStrategy();
     }
     moveBoxToLeft() {
         //检查左侧碰撞
