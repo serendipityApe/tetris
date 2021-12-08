@@ -6,7 +6,8 @@ export class Player {
     constructor(game: Game) {
         this._game = game;
         this._game.setCreateBoxStrategy(this.createBoxStrategy.bind(this));
-        window.addEventListener('keydown', this.handlerKeyDown.bind(this))
+        // window.addEventListener('keydown', this.handlerKeyDown.bind(this))
+        window.onkeydown = this.handlerKeyDown.bind(this)
     }
     createBoxStrategy() {
         const box = randomCreateBox();

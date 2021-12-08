@@ -13,6 +13,9 @@ const Game: React.FC<Props> = (props) => {
   };
   useEffect(() => {
     initSelfGame(mapRef, setMapRef);
+    return () => {
+      console.log('注销')
+    };
   }, []);
   // useUpdate(() => {
   //   let activeBox = createBox();

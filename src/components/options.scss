@@ -1,0 +1,44 @@
+.homeOptions {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url("../assets/imgs/background.jpeg");
+  background-position: center;
+  background-size: cover;
+  .myOptions {
+    z-index: 99;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    li {
+      margin-bottom: 20px;
+      color: whitesmoke;
+      cursor: pointer;
+      &.alone:hover {
+        color: #1f5fb0;
+      }
+      &.online:hover {
+        color: #367439;
+      }
+      &.more:hover{
+        color: #FFD86C;
+    }
+    }
+  }
+}
+.overlay {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.3 ease-out;
+}

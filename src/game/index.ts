@@ -18,3 +18,15 @@ export function startGame() {
     // isStarted = true;
     player.start();
 }
+
+let _gameoverHandler: Function;
+export function setGameoverHandler(fn: Function) {
+    _gameoverHandler = fn;
+}
+export function getGameoverHandler() {
+    return _gameoverHandler;
+}
+
+export function forceOverGame(){
+    selfGame.forceOverGame();
+}

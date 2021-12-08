@@ -6,6 +6,7 @@ import { addBoxtoMap, eliminateLine } from "./map";
 import intervalTimer from "./utils/intervalTimer";
 import { moveDownTimeInterval } from ".";
 import { addTicker, removeTicker } from "./ticker";
+import { getGameoverHandler } from './'
 export * from './config'
 
 export class Game {
@@ -46,6 +47,7 @@ export class Game {
             if (isBoxOverFlow(this._mapRef.current)) {
                 removeTicker(this.handleTicker, this);
                 alert('游戏结束');
+                getGameoverHandler()();
                 return;
             }
             this._activeBox = randomCreateBox();
@@ -77,5 +79,10 @@ export class Game {
     }
     setCreateBoxStrategy(strategy: any) {
         this._createBoxStrategy = strategy;
+    }
+    forceOverGame() {
+        alert('游戏关闭');
+        removeTicker(this.handleTicker, this);
+        getGameoverHandler()();
     }
 }
