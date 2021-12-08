@@ -63,6 +63,8 @@ export function isIllegalBoxInMap(box: BoxType, map: number[][]) {
         for (let j = 0; j < col; j++) {
             const xx = box.x + j;
             const yy = box.y + i;
+            if (xx < 0 || xx >= map[0].length) return true;
+            if (yy < 0 || yy >= map.length) return true;
             if (map[yy][xx] < 0) {
                 return true;
             }
