@@ -1,5 +1,5 @@
 import { initMap } from './map'
-import { createBox } from "./box";
+import { randomCreateBox } from "./box";
 import { Game } from './game';
 import { Player } from './Player';
 export * from './config'
@@ -7,7 +7,7 @@ export * from './config'
 let selfGame: Game;
 let player: Player;
 export function initSelfGame(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
-    const box = createBox();
+    const box = randomCreateBox();
     initMap(setMapRef);
     selfGame = new Game(box, mapRef, setMapRef);
     player = new Player(selfGame);

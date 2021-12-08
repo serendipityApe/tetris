@@ -1,7 +1,7 @@
-import { BoxType, createBox } from "./box";
+import { BoxType, createBox, randomCreateBox } from "./box";
 import render from "./render";
 
-import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow } from "./hit";
+import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow, isIllegalBoxInMap } from "./hit";
 import { addBoxtoMap, eliminateLine } from "./map";
 import intervalTimer from "./utils/intervalTimer";
 import { moveDownTimeInterval } from ".";
@@ -23,7 +23,6 @@ export class Game {
     }
     //游戏开始每帧执行的函数，包括box向下移动与render;
     handleTicker(i: number) {
-        console.log('执行')
         this.handleBoxMoveDown(i);
         render(this._activeBox, this._mapRef, this._setMapRef)
     }
@@ -49,7 +48,7 @@ export class Game {
                 alert('游戏结束');
                 return;
             }
-            this._activeBox = createBox();
+            this._activeBox = randomCreateBox();
             return;
         }
         this._activeBox.y++;
@@ -64,7 +63,14 @@ export class Game {
         this._activeBox.x++;
     }
     rotateBox() {
-        this._activeBox.rotate();
+        const boxInAdvance = createBox({
+            x: this._activeBox.x,
+            y: this._activeBox.y,
+            shape: this._activeBox.getNextRotateShapeInAdvance(),
+        });
+        //检测box是否可以旋转
+        if (isIllegalBoxInMap(boxInAdvance, this._mapRef.current)) return;
+        this._activeBox.rotate(boxInAdvance.shape);
     }
     setBox(box: BoxType) {
         this._activeBox = box;

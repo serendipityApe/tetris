@@ -6,33 +6,44 @@ export interface BoxType {
     shape: number[][];
     type: number;
     rotate: Function;
-    setRotate: Function
+    setRotate: Function;
+    getNextRotateShapeInAdvance: Function
 }
 export class Box implements BoxType {
     x: number;
     y: number;
     shape: number[][];
     type: number;
-    constructor(type = 0) {
-        this.x = 0;
-        this.y = 0;
-        this.type = type;
-        this.shape = [
-            [1, 1],
-            [1, 1],
+    constructor(options: { x?: number; y?: number; shape?: number[][]; type?: number } = {}) {
+        this.x = options.x || 0;
+        this.y = options.y || 0;
+        this.type = options.type || 1;
+        this.shape = options.shape || [
+            [2, 0, 0],
+            [2, 2, 0],
+            [0, 2, 0],
         ];
     }
+
     private _rotates: any[] = [];
     private _rotateIndex = 0;
-    rotate() {
+    rotate(nextShape?: number[][]) {
         const rotateHandler: Function = this._rotates[this._rotateIndex];
         if (!rotateHandler) return;
-        this.shape = rotateHandler(this.shape);
-        console.log(this.shape);
+        if (nextShape) {
+            this.shape = nextShape;
+        } else {
+            this.shape = rotateHandler(this.shape);
+        }
         this._rotateIndex++;
         if (this._rotateIndex >= this._rotates.length) {
             this._rotateIndex = 0;
         }
+    }
+    getNextRotateShapeInAdvance() {
+        const rotateHandler: Function = this._rotates[this._rotateIndex];
+        if (!rotateHandler) return;
+        return rotateHandler(this.shape);
     }
     setRotate(rotates?: any[]) {
         if (rotates) {
@@ -88,21 +99,20 @@ const boxInfos: { [key: number]: { type: number; shape: number[][]; rotateStrate
     //     rotateStrategy: [rotate, rotate, rotate, rotate],
     // },
 };
-
+export function createBox(options: { x?: number; y?: number; shape?: number[][]; type?: number } = {}) {
+    let { x, y, shape, type } = options
+    return new Box({ x, y, shape, type });
+}
 //使用工厂模式创建Box
-export function createBox() {
-    const { shape, type, rotateStrategy } = getRandomBoxInfo();
-    const box = new Box(type);
-    box.setRotate(rotateStrategy);
-    box.shape = shape;
-    return box;
+export function randomCreateBox() {
+    const { type } = getRandomBoxInfo();
+    return createBoxByType(type);
 }
 export function createBoxByType(type: number) {
-    const box = new Box(type);
+    const box = new Box({ type });
     const { shape, rotateStrategy } = boxInfos[type];
     box.setRotate(rotateStrategy);
     box.shape = shape;
-
     return box;
 }
 function getRandomBoxInfo() {

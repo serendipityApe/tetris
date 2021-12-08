@@ -45,7 +45,6 @@ export function hitRightBoxAndBorder(box: BoxType, map: number[][]) {
     return points.some((point) => {
         const col = point.x + box.x;
         const row = point.y + box.y;
-        console.log(`${row},${col}`)
         return col >= map[0].length - 1 || map[row][col + 1] < 0;
     })
 }
@@ -55,4 +54,20 @@ export function isBoxOverFlow(map: number[][]) {
     return map[row].some((point) => {
         return point < 0
     })
+}
+export function isIllegalBoxInMap(box: BoxType, map: number[][]) {
+    const shape = box.shape;
+    const row = shape.length;
+    const col = shape[0].length;
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            const xx = box.x + j;
+            const yy = box.y + i;
+            if (map[yy][xx] < 0) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }

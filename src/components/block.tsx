@@ -10,7 +10,7 @@ export const Block = (props: Props) => {
       // B2BF88 CADCB6
     0: "#CADCB6",
     1: "#1F8258",
-    2: "#34776C",
+    2: "#B2BF88",
     3: "#1E7870",
     4: "#218C47",
     [-1]: '#1E7870',

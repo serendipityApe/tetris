@@ -1,4 +1,4 @@
-import { createBox } from "./box";
+import { randomCreateBox } from "./box";
 import { Game } from "./game";
 
 export class Player {
@@ -9,7 +9,7 @@ export class Player {
         window.addEventListener('keydown', this.handlerKeyDown.bind(this))
     }
     createBoxStrategy() {
-        const box = createBox();
+        const box = randomCreateBox();
         return box;
     }
     start() {
