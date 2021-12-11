@@ -1,15 +1,12 @@
 import { randomCreateBox } from "./box";
 import { Game } from "./game";
 import isMobile from './utils/checkServices'
-import { message } from "./message";
-import { gameoverAll, getGameoverHandler } from ".";
-export class Player {
+export class Alone {
     private _game: Game;
     constructor(game: Game) {
         this._game = game;
         this._game.setCreateBoxStrategy(this.createBoxStrategy.bind(this));
         this._game._emitter.on('gameover', this.gameLose.bind(this));
-        this._game._emitter.on('moveBoxToDown', () => { message.emit('moveBoxToDown') })
         if (isMobile()) {
 
         } else {
@@ -19,15 +16,13 @@ export class Player {
     }
     createBoxStrategy() {
         const box = randomCreateBox();
-        message.emit('createBox', box.type);
-        // console.log('发送createBox')
         return box;
     }
     gameLose() {
-        message.emit('gameover');
-        alert('游戏结束,你输了');
+        alert('游戏结束');
+        window.location.replace('/')
         // this._game.endGame();
-        gameoverAll();
+        // gameoverAll();
         // getGameoverHandler()();
     }
     start() {
@@ -55,19 +50,15 @@ export class Player {
         switch (e.code) {
             case "ArrowDown":
                 this._game.moveBoxToDown();
-                message.emit('moveBoxToDown')
                 break;
             case "ArrowLeft":
                 this._game.moveBoxToLeft();
-                message.emit('moveBoxToLeft')
                 break;
             case "ArrowRight":
                 this._game.moveBoxToRight();
-                message.emit('moveBoxToRight')
                 break;
             case "ArrowUp":
                 this._game.rotateBox();
-                message.emit('rotateBox')
                 break;
             default: break;
         }

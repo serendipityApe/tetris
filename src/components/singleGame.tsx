@@ -1,9 +1,12 @@
 import React from "react";
 import Game from "./game/game";
-import { forceOverSelfGame } from "../game";
+import { forceOverSelfGame, initGameSelf } from "../game";
 interface Props {}
 
 export const SingleGame = (props: Props) => {
+  React.useEffect(() => {
+    initGameSelf();
+  }, []);
   return (
     <div>
       <div
@@ -37,7 +40,7 @@ export const SingleGame = (props: Props) => {
           transform: "translate(-50%,-50%)",
         }}
       >
-        <Game type="self"></Game>
+        <Game type="single"></Game>
       </div>
     </div>
   );

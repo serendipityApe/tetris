@@ -1,4 +1,4 @@
-import { BoxType, createBox, randomCreateBox } from "./box";
+import { BoxType, createBox } from "./box";
 import render from "./render";
 
 import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow, isIllegalBoxInMap } from "./hit";
@@ -6,8 +6,7 @@ import { addBoxtoMap, eliminateLine } from "./map";
 import intervalTimer from "./utils/intervalTimer";
 import { moveDownTimeInterval } from ".";
 import { addTicker, removeTicker } from "./ticker";
-import { getGameoverHandler } from './'
-import { message } from "./message";
+import mitt from "mitt";
 export * from './config'
 
 export class Game {
@@ -34,16 +33,17 @@ export class Game {
     handleBoxMoveDown(n: number) {
         // if (!this._game) return;
         if (this._isAutoDown) {
-
             if (this._isDown(n)) {
                 this.moveBoxToDown();
-                message.emit('moveBoxToDown', () => { })
+                // message.emit('moveBoxToDown')
+                this._emitter.emit('moveBoxToDown')
             }
         }
     }
     render() {
         render(this._activeBox, this._mapRef, this._setMapRef);
     }
+    _emitter = mitt();
     moveBoxToDown() {
         if (
             hitBottomBorder(this._activeBox, this._mapRef.current) ||
@@ -53,8 +53,7 @@ export class Game {
             eliminateLine(this._mapRef, this._setMapRef);
             if (isBoxOverFlow(this._mapRef.current)) {
                 removeTicker(this.handleTicker, this);
-                alert('游戏结束');
-                getGameoverHandler()();
+                this._emitter.emit('gameover')
                 return;
             }
             // this._activeBox = randomCreateBox();
@@ -92,9 +91,15 @@ export class Game {
     setCreateBoxStrategy(strategy: any) {
         this._createBoxStrategy = strategy;
     }
+    endGame() {
+        removeTicker(this.handleTicker, this);
+        this._emitter.all.clear();
+    }
     forceOverGame() {
         alert('游戏关闭');
-        removeTicker(this.handleTicker, this);
-        getGameoverHandler()();
+        window.location.replace('/')
+        // removeTicker(this.handleTicker, this);
+        // this._emitter.all.clear();
+        // getGameoverHandler()();
     }
 }

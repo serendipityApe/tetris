@@ -1,3 +1,4 @@
+import { gameoverAll, getGameoverHandler } from ".";
 import { createBoxByType } from "./box";
 import { Game } from "./game";
 import { message } from "./message";
@@ -10,6 +11,7 @@ export class Rival {
         message.on("moveBoxToDown", this.moveBoxToDown.bind(this))
         message.on("rotateBox", this.rotateBox.bind(this))
         message.on("createBox", this.createBoxListener.bind(this))
+        message.on("gameover", this.gameWon.bind(this))
     }
     _boxType = 0;
     _firstAccept = false;
@@ -22,10 +24,15 @@ export class Rival {
         }
         console.log(this._boxType);
     }
+    gameWon() {
+        alert('游戏结束,你赢了');
+        gameoverAll();
+        // getGameoverHandler()();
+    }
     createBoxStrategy() {
         // const box = randomCreateBox();
         // return box;
-        
+
         return createBoxByType(this._boxType);
     }
     start() {

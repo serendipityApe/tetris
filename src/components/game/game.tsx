@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { initSelfGame, initRivalGame, operateInMobile } from "../../game";
+import {
+  initSelfGame,
+  initRivalGame,
+  operateInMobile,
+  getEmitter,
+  initAloneGame,
+  gameoverAll,
+} from "../../game";
 import { Block } from "../block";
 import "./game.scss";
 import isMobile from "../../game/utils/checkServices";
@@ -17,12 +24,18 @@ const Game: React.FC<Props> = (props) => {
     setMap(mapRef.current);
   };
   useEffect(() => {
-    if (props.type === "self") {
-      initSelfGame(mapRef, setMapRef);
-    } else {
-      initRivalGame(mapRef, setMapRef);
-    }
+    getEmitter().on("startGame", () => {
+      console.log("接收到开始命令");
+      if (props.type === "self") {
+        initSelfGame(mapRef, setMapRef);
+      } else if (props.type === "rival") {
+        initRivalGame(mapRef, setMapRef);
+      } else {
+        initAloneGame(mapRef, setMapRef);
+      }
+    });
     return () => {
+      gameoverAll();
       console.log("注销");
     };
   }, []);
