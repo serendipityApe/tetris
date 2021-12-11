@@ -38,6 +38,7 @@ const Game: React.FC<Props> = (props) => {
       gameoverAll();
       console.log("注销");
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const longPressureListener = React.useRef<{
     inter: NodeJS.Timeout | null;

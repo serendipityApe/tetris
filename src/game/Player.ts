@@ -2,7 +2,7 @@ import { randomCreateBox } from "./box";
 import { Game } from "./game";
 import isMobile from './utils/checkServices'
 import { message } from "./message";
-import { gameoverAll, getGameoverHandler } from ".";
+import { gameoverAll } from ".";
 export class Player {
     private _game: Game;
     constructor(game: Game) {

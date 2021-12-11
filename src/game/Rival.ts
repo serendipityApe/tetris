@@ -1,4 +1,4 @@
-import { gameoverAll, getGameoverHandler } from ".";
+import { gameoverAll } from ".";
 import { createBoxByType } from "./box";
 import { Game } from "./game";
 import { message } from "./message";

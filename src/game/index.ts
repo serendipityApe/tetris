@@ -1,5 +1,4 @@
 import { initMap } from './map'
-import { randomCreateBox } from "./box";
 import { Game } from './game';
 import { Player } from './Player';
 import { initMessage } from './message';
@@ -46,6 +45,9 @@ export function initRivalGame(mapRef: React.MutableRefObject<number[][]>, setMap
     initMap(setMapRef);
     rivalGame = new Game(mapRef, setMapRef);
     rivalPlayer = new Rival(rivalGame);
+}
+export function getRival(){
+    return rivalPlayer;
 }
 
 export function startGameSingle() {

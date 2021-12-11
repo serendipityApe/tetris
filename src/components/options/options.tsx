@@ -1,7 +1,5 @@
 import React from "react";
-import { SingleGame } from "../singleGame";
-import { MultGame } from "../multGame";
-import { startGame, setGameoverHandler, startGameSingle } from "../../game";
+import { startGameSingle } from "../../game";
 import { useNavigate } from "react-router";
 import "./options.scss";
 interface Props {}

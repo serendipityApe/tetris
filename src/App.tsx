@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { mainRouter } from "./router";
-import { Options } from "./components/options/options";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 
 function App() {

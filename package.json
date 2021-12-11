@@ -23,9 +23,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && node create_redirects.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test1": "node create_redirects.js"
   },
   "eslintConfig": {
     "extends": [
