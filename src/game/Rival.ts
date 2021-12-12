@@ -2,6 +2,7 @@ import { gameoverAll } from ".";
 import { createBoxByType } from "./box";
 import { Game } from "./game";
 import { message } from "./message";
+import { PenaltyStragety } from "./compete";
 export class Rival {
     private _game: Game;
     constructor(game: Game) {
@@ -12,6 +13,17 @@ export class Rival {
         message.on("rotateBox", this.rotateBox.bind(this))
         message.on("createBox", this.createBoxListener.bind(this))
         message.on("gameover", this.gameWon.bind(this))
+        message.on('syncPenalty', (penaltyStrategys) => {
+            let orders: PenaltyStragety[] = JSON.parse(penaltyStrategys)
+            console.log(orders)
+            for (let i = 0; i < orders.length; i++) {
+                if (orders[i].order === 'addLine') {
+                    this._game.syncAddLine.call(this._game, Number(orders[i].cum))
+                } else {
+                    this._game[orders[i].order].apply(this._game)
+                }
+            }
+        })
     }
     _boxType = 0;
     _firstAccept = false;
@@ -22,7 +34,6 @@ export class Rival {
             this.start();
             this._firstAccept = true;
         }
-        console.log(this._boxType);
     }
     gameWon() {
         alert('游戏结束,你赢了');

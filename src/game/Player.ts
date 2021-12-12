@@ -3,6 +3,7 @@ import { Game } from "./game";
 import isMobile from './utils/checkServices'
 import { message } from "./message";
 import { gameoverAll } from ".";
+import { randomPenaltyStrategy } from "./compete";
 export class Player {
     private _game: Game;
     constructor(game: Game) {
@@ -10,6 +11,22 @@ export class Player {
         this._game.setCreateBoxStrategy(this.createBoxStrategy.bind(this));
         this._game._emitter.on('gameover', this.gameLose.bind(this));
         this._game._emitter.on('moveBoxToDown', () => { message.emit('moveBoxToDown') })
+        this._game._emitter.on('eliminateLine', (num) => { message.emit('eliminateLine', num) })
+
+        message.on('createPenaltyStrategy', (num) => {
+            let penaltyStrategys = [];
+            for (let i = 0; i < num; i++) {
+                let penalty = randomPenaltyStrategy()
+                let cum = this._game[penalty.order].apply(this._game);
+                penalty.cum = cum;
+                console.log(penalty);
+                penaltyStrategys.push(penalty);
+                console.log(penaltyStrategys)
+            }
+            console.log(penaltyStrategys)
+            console.log(randomPenaltyStrategy())
+            message.emit('penaltyStrategys', JSON.stringify(penaltyStrategys));
+        });
         if (isMobile()) {
 
         } else {

@@ -2,11 +2,12 @@ import { BoxType, createBox } from "./box";
 import render from "./render";
 
 import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow, isIllegalBoxInMap } from "./hit";
-import { addBoxtoMap, eliminateLine } from "./map";
+import { addBoxtoMap, eliminateLine, isEliminateLine } from "./map";
 import intervalTimer from "./utils/intervalTimer";
 import { moveDownTimeInterval } from ".";
 import { addTicker, removeTicker } from "./ticker";
 import mitt from "mitt";
+import deepClone from "./utils/deepClone";
 export * from './config'
 
 export class Game {
@@ -50,10 +51,14 @@ export class Game {
             hitBottomBox(this._activeBox, this._mapRef.current)
         ) {
             addBoxtoMap(this._activeBox, this._mapRef, this._setMapRef);
-            eliminateLine(this._mapRef, this._setMapRef);
+            let lines = isEliminateLine(this._mapRef);
+            if (lines.length) {
+                eliminateLine(this._mapRef, this._setMapRef, lines);
+                this._emitter.emit('eliminateLine', lines.length)
+            }
             if (isBoxOverFlow(this._mapRef.current)) {
                 removeTicker(this.handleTicker, this);
-                this._emitter.emit('gameover')
+                this._emitter.emit('gameover');
                 return;
             }
             // this._activeBox = randomCreateBox();
@@ -65,6 +70,29 @@ export class Game {
     }
     addBox() {
         this._activeBox = this._createBoxStrategy();
+    }
+    addLine(): number {
+        let _map: number[][] = deepClone(this._mapRef.current);
+        const row = _map[0].length;
+        let line = new Array(row).fill(-1);
+        let randomBlank =Math.floor(Math.random() * row);
+        line[randomBlank] = 0;
+        _map.shift();
+        _map.push(line);
+        this._setMapRef(_map);
+        console.log(randomBlank + 'randomBlank')
+        return randomBlank
+    }
+    syncAddLine(appointed:number){
+        let _map: number[][] = deepClone(this._mapRef.current);
+        const row = _map[0].length;
+        let line = new Array(row).fill(-1);
+        line[appointed] = 0;
+        _map.shift();
+        _map.push(line);
+        this._setMapRef(_map);
+        console.log(appointed + 'appointed')
+        return appointed
     }
     moveBoxToLeft() {
         //检查左侧碰撞

@@ -29,11 +29,10 @@ export function addBoxtoMap(box: BoxType, map: React.MutableRefObject<number[][]
     }
     setMapRef(_map);
 }
-export function eliminateLine(map: React.MutableRefObject<number[][]>, setMapRef: Function) {
-    let _map: number[][] = deepClone(map.current);
+export function isEliminateLine(map: React.MutableRefObject<number[][]>) {
     let lines: Array<number> = [];
-    for (let i = 0; i < _map.length; i++) {
-        const arr = _map[i];
+    for (let i = 0; i < map.current.length; i++) {
+        const arr = map.current[i];
 
         const boo = arr.every((v) => {
             return v === -1;
@@ -43,6 +42,11 @@ export function eliminateLine(map: React.MutableRefObject<number[][]>, setMapRef
             lines.push(i);
         }
     }
+    return lines;
+}
+export function eliminateLine(map: React.MutableRefObject<number[][]>, setMapRef: Function, lines: number[]) {
+    let _map: number[][] = deepClone(map.current);
+
     const mapCol = _map[0].length;
 
     lines.forEach((n) => {
@@ -50,5 +54,16 @@ export function eliminateLine(map: React.MutableRefObject<number[][]>, setMapRef
         // 补上新的行
         _map.unshift(new Array(mapCol).fill(0));
     });
+    setMapRef(_map);
+}
+
+//在最后一行加上空白格为1的一行
+export function addLine(map: React.MutableRefObject<number[][]>, setMapRef: Function) {
+    let _map: number[][] = deepClone(map.current);
+    const row = _map[0].length;
+    let line = new Array(row).fill(-1);
+    let randomBlank = Math.floor(Math.random() * row);
+    line[randomBlank] = 0;
+    _map.push(line);
     setMapRef(_map);
 }

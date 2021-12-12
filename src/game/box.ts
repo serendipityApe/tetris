@@ -117,7 +117,7 @@ export function createBoxByType(type: number) {
 }
 function getRandomBoxInfo() {
     const max = Object.keys(boxInfos).length;
-    // const type = 3;
+    // const type = 1;
     const type = Math.floor(Math.random() * max + 1);
     return boxInfos[type];
 }
