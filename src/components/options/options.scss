@@ -13,10 +13,13 @@
     padding: 0;
     list-style: none;
     position: relative;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 30%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    display: inline-flex;
+    flex-direction: column;
     li {
+      display: inline-block;
       margin-bottom: 20px;
       font-size: 1.2rem;
       color: whitesmoke;

@@ -4,21 +4,26 @@ import render from "./render";
 import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow, isIllegalBoxInMap } from "./hit";
 import { addBoxtoMap, eliminateLine, isEliminateLine } from "./map";
 import intervalTimer from "./utils/intervalTimer";
-import { moveDownTimeInterval } from ".";
+// import { moveDownTimeInterval } from ".";
+import { StateManagement } from "./StateManagement";
 import { addTicker, removeTicker } from "./ticker";
 import mitt from "mitt";
 import deepClone from "./utils/deepClone";
-export * from './config'
 
 export class Game {
     private _mapRef: React.MutableRefObject<number[][]>;
     private _setMapRef: Function;
     private _activeBox: any; // -> boxtype
     private _createBoxStrategy: any;
+    private _stateManagement: StateManagement
+    private _isDown: Function = () => false
     constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
         this._mapRef = mapRef;
         // this._activeBox = box;
         this._setMapRef = setMapRef;
+        this._stateManagement = new StateManagement();
+        console.log(this._stateManagement.getSpeed())
+        this._isDown = intervalTimer(this._stateManagement.getSpeed())
     }
     start() {
         this.addBox();
@@ -29,7 +34,7 @@ export class Game {
         this.handleBoxMoveDown(i);
         render(this._activeBox, this._mapRef, this._setMapRef)
     }
-    _isDown = intervalTimer(moveDownTimeInterval);
+
     _isAutoDown = true;
     handleBoxMoveDown(n: number) {
         // if (!this._game) return;
@@ -75,7 +80,7 @@ export class Game {
         let _map: number[][] = deepClone(this._mapRef.current);
         const row = _map[0].length;
         let line = new Array(row).fill(-1);
-        let randomBlank =Math.floor(Math.random() * row);
+        let randomBlank = Math.floor(Math.random() * row);
         line[randomBlank] = 0;
         _map.shift();
         _map.push(line);
@@ -83,7 +88,7 @@ export class Game {
         console.log(randomBlank + 'randomBlank')
         return randomBlank
     }
-    syncAddLine(appointed:number){
+    syncAddLine(appointed: number) {
         let _map: number[][] = deepClone(this._mapRef.current);
         const row = _map[0].length;
         let line = new Array(row).fill(-1);

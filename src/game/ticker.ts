@@ -1,19 +1,19 @@
 // ticker
 let startTime = Date.now();
 function handleFrame() {
+    let time = Date.now() - startTime;
     tickers.forEach((ticker) => {
-        ticker.fn.call(ticker.listener, (Date.now() - startTime));
+        ticker.fn.call(ticker.listener, time);
     });
     startTime = Date.now();
     requestAnimationFrame(handleFrame);
 }
-
 requestAnimationFrame(handleFrame);
 
 const tickers: Array<{ fn: Function; listener: any }> = [];
 export function addTicker(fn: Function, listener: any) {
     tickers.push({ fn, listener });
-    
+
 }
 export function removeTicker(fn: Function, listeners: any) {
     for (let i = 0; i < tickers.length; i++) {

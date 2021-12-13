@@ -42,7 +42,14 @@ export const Options = (props: Props) => {
           >
             多人对战
           </li>
-          <li className="set">设置</li>
+          <li
+            className="set"
+            onClick={() => {
+              navigate("/config");
+            }}  
+          >
+            设置
+          </li>
           <li
             className="help"
             onClick={() => {
@@ -55,7 +62,7 @@ export const Options = (props: Props) => {
             className="more"
             onClick={() => {
               // window.open("https://github.com/serendipityApe/tetris");
-              navigate('/more')
+              navigate("/more");
             }}
           >
             关于

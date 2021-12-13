@@ -1,7 +1,9 @@
-import { gameCol, gameRow } from ".";
+import { currentConfig } from "./config";
 import { BoxType } from "./box";
 import deepClone from "./utils/deepClone";
 
+const gameCol = currentConfig.col
+const gameRow = currentConfig.row
 //初始化map
 export function initMap(setMapRef: Function) {
     let _map = [];

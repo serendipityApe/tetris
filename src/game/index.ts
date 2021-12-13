@@ -5,7 +5,6 @@ import { initMessage } from './message';
 import { Rival } from './Rival';
 import mitt from 'mitt';
 import { Alone } from './alone';
-export * from './config'
 
 const emitter = mitt();
 
