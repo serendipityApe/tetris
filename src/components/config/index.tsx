@@ -1,6 +1,5 @@
 import React from "react";
 import Background from "../background";
-
 import "./config.scss";
 interface Props {}
 
@@ -9,12 +8,14 @@ const Config = (props: Props) => {
   const difficultiesZH = ["简单", "一般", "困难", "极难"];
   const patterns = ["usually", "dj"];
   const patternsZH = ["默认", "狂暴dj"];
-
+  const themes = ["green", "blue", "yellow"];
+  const themesZH = ["绿", "蓝", "黄"];
   const storageConfig = JSON.parse(
     localStorage.getItem("configSingle") as string
   );
   const [difficulty, setDifficulty] = React.useState(storageConfig.difficulty);
   const [pattern, setPattern] = React.useState(storageConfig.pattern);
+  const [theme, setTheme] = React.useState(storageConfig.theme);
   return (
     <Background>
       <div className="configuration">
@@ -93,6 +94,46 @@ const Config = (props: Props) => {
                   }}
                 >
                   {patternsZH[index]}
+                </span>
+              </span>
+            );
+          })}
+        </div>
+        <div className="theme configurationItem">
+          <span className="themeLabel">主题:</span>
+          <span className="separator"></span>
+          {themes.map((type, index) => {
+            return index !== themes.length - 1 ? (
+              <span key={type} className="item">
+                <span
+                  className={theme === type ? `active ${type}` : type}
+                  onClick={() => {
+                    setTheme(type);
+                    storageConfig.theme = type;
+                    localStorage.setItem(
+                      "configSingle",
+                      JSON.stringify(storageConfig)
+                    );
+                  }}
+                >
+                  {themesZH[index]}
+                </span>
+                <span className="separator">/</span>
+              </span>
+            ) : (
+              <span key={type} className="item">
+                <span
+                  className={theme === type ? `active ${type}` : type}
+                  onClick={() => {
+                    setTheme(type);
+                    storageConfig.theme = type;
+                    localStorage.setItem(
+                      "configSingle",
+                      JSON.stringify(storageConfig)
+                    );
+                  }}
+                >
+                  {themesZH[index]}
                 </span>
               </span>
             );

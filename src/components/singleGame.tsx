@@ -1,9 +1,13 @@
 import React from "react";
 import Game from "./game/game";
 import { forceOverSelfGame, initGameSelf } from "../game";
+import { themeConfig } from "../game/config";
 interface Props {}
 
 export const SingleGame = (props: Props) => {
+  const configTheme = JSON.parse(
+    localStorage.getItem("configSingle") as string
+  ).theme;
   React.useEffect(() => {
     initGameSelf();
   }, []);
@@ -24,7 +28,7 @@ export const SingleGame = (props: Props) => {
             position: "absolute",
             top: "20px",
             left: "20px",
-            fill: "#1E7870",
+            fill: `${themeConfig[configTheme  ][-1]}`,
             cursor: "pointer",
           }}
         >

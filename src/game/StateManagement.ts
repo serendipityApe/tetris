@@ -20,6 +20,9 @@ export class StateManagement implements StateManagementType {
     resetSpeed() {
         this.initSpeed();
     }
+    updatedState() {
+        this.updatedState();
+    }
     getSpeed() {
         return this._speed;
     }

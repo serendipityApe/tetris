@@ -55,4 +55,26 @@
       }
     }
   }
+  .theme {
+    $colors: (
+      green: #367439,
+      blue: #1f5fb0,
+      yellow: #ffd86c,
+    );
+    .themeLabel {
+      color: whitesmoke;
+    }
+    .item {
+      cursor: pointer;
+      color: gainsboro;
+      @each $key, $color in $colors {
+        .#{$key}.active {
+          color: $color;
+        }
+        .#{$key}:hover {
+          color: $color;
+        }
+      }
+    }
+  }
 }
