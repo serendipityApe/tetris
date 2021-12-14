@@ -1,8 +1,10 @@
-let _timer;
+
+
+let _djState = false;
 // 1883578679 40s
 //http://music.163.com/song/media/outer/url?id=1391479812.mp3
-var bgmSrc =
-  "https://nd002723.github.io/carnival/audio/Martin%20Jensen%20-%20Fox%20(Loop%20Remix).mp3";
+//https://nd002723.github.io/carnival/audio/Martin%20Jensen%20-%20Fox%20(Loop%20Remix).mp3
+var bgmSrc = "http://music.163.com/song/media/outer/url?id=1883578679.mp3";
 var cssHref = "https://nd002723.github.io/carnival/css/high.css";
 function letDance() {
   function loadCss() {
@@ -110,6 +112,8 @@ function letDance() {
     e.addEventListener(
       "ended",
       function () {
+        _djState = false;
+        //结束
         N();
         h();
       },
@@ -168,31 +172,32 @@ function letDance() {
   setBgm(); //添加背景音乐
 
   var O = [];
-  for (var L = 0; L < C.length; L++) {
-    var targetDiv = C[L];
+  for (let L = 0; L < C.length; L++) {
+    let targetDiv = C[L];
     if (checkSize(targetDiv)) {
       O.push(targetDiv);
     }
   }
 
-  //网页整体倾斜效果（这块儿本来是JQuery实现的，为了避免引入JQuery，做了改动。）
-  var style = document.createElement("style");
-  style.type = "text/css";
-  try {
-    style.appendChild(
-      document.createTextNode(
-        "body{overflow-x:hidden;transform: rotate(1deg);-webkit-transform: rotate(1deg);-moz-transform: rotate(1deg);-o-transform: rotate(1deg);-ms-transform: rotate(1deg)}"
-      )
-    );
-  } catch (ex) {
-    style.styleSheet.cssText = "body{background-color:red}"; //针对IE
-  }
-  var head = document.getElementsByTagName("head")[0];
-  head.appendChild(style);
+  // //网页整体倾斜效果（这块儿本来是JQuery实现的，为了避免引入JQuery，做了改动。）
+  // var style = document.createElement("style");
+  // style.type = "text/css";
+  // try {
+  //   style.appendChild(
+  //     document.createTextNode(
+  //       "body{overflow-x:hidden;transform: rotate(1deg);-webkit-transform: rotate(1deg);-moz-transform: rotate(1deg);-o-transform: rotate(1deg);-ms-transform: rotate(1deg)}"
+  //     )
+  //   );
+  // } catch (ex) {
+  //   style.styleSheet.cssText = "body{background-color:red}"; //针对IE
+  // }
+  // var head = document.getElementsByTagName("head")[0];
+  // head.appendChild(style);
 }
 export function beginDJ() {
-  _timer = setTimeout(letDance, 1000);
+  setTimeout(letDance, 500);
+  _djState = true;
 }
-export function stopDJ() {
-  clearTimeout(_timer);
+export function getState(){
+  return _djState;
 }

@@ -34,10 +34,12 @@ export const SingleGame = (props: Props) => {
       <div
         className="gaming"
         style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
+          // position: "absolute",
+          // top: "50%",
+          // left: "50%",
+          // transform: "translate(-50%,-50%)",
+          display: "inline-block",
+          marginTop: "8rem",
         }}
       >
         <Game type="single"></Game>
