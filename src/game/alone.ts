@@ -1,7 +1,7 @@
 import { randomCreateBox } from "./box";
 import { Game } from "./game";
 import isMobile from './utils/checkServices'
-import { beginDJ, getState } from "./utils/frenzyDj.js";
+import { beginDJ, getState } from "./utils/frenzyDj";
 export class Alone {
     private _game: Game;
     constructor(game: Game) {
