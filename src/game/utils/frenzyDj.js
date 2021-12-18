@@ -1,10 +1,61 @@
-
-
 let _djState = false;
+
+const bgms = [
+  "1883578679",
+  "407759835",
+  "1473214690",
+  "1806679514",
+  "1861359883",
+  "1423614111",
+  "1370877684",
+  "1382460597",
+  "441612739",
+  "1469528509",
+  "1465439543",
+  "1852267527",
+//
+  "1436490143",
+  "1489366510",
+  "1418852960",
+  "1431880021",
+  "1452418823",
+  "1449990499",
+  "1376994010",
+  "1441897090",
+  "1851646587",
+  "1849656584",
+];
 // 1883578679 40s
+// 407759835：Code Paradiso
+// 1473214690 onday
+// 1806679514
+// 1861359883
+// 1423614111
+// 1370877684
+// 1382460597
+// 441612739
+//1469528509
+// 1465439543
+//1852267527
+
+//1436490143
+//1489366510
+// 1418852960
+// 1431880021
+//1452418823
+//1449990499
+//1376994010
+// 1441897090
+//1851646587
+//1849656584
+
+function randomGetBgm(){
+  
+  return `http://music.163.com/song/media/outer/url?id=${bgms[Math.floor(Math.random() * bgms.length)]}.mp3`
+}
 //http://music.163.com/song/media/outer/url?id=1391479812.mp3
 //https://nd002723.github.io/carnival/audio/Martin%20Jensen%20-%20Fox%20(Loop%20Remix).mp3
-var bgmSrc = "http://music.163.com/song/media/outer/url?id=1883578679.mp3";
+// var bgmSrc = "http://music.163.com/song/media/outer/url?id=1883578679.mp3";
 var cssHref = "https://nd002723.github.io/carnival/css/high.css";
 function letDance() {
   function loadCss() {
@@ -91,7 +142,7 @@ function letDance() {
     //设置音乐
     var e = document.createElement("audio");
     e.setAttribute("class", l);
-    e.src = bgmSrc; //bgm地址
+    e.src = randomGetBgm(); //bgm地址
     e.loop = false;
     e.addEventListener(
       "canplay",
@@ -198,6 +249,6 @@ export function beginDJ() {
   setTimeout(letDance, 500);
   _djState = true;
 }
-export function getState(){
+export function getState() {
   return _djState;
 }
