@@ -1,4 +1,4 @@
-type configSingle = {
+export type configSingle = {
     difficulty: "common" | 'simple' | 'hard' | 'hardest';
     pattern: 'usually' | 'dj';
     theme: 'green' | 'blue' | 'yellow'
@@ -22,8 +22,6 @@ export const gameRow = 10;
 export const gameCol = 16;
 
 export const moveDownTimeInterval = 300
-
-
 
 export const configGame = {
     simple: {
@@ -87,16 +85,18 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         [-1]: '#FDCF00',
     }
 }
-let curConfig: configSingle = JSON.parse(localStorage.getItem("configSingle") as string);
+// let curConfig: configSingle = JSON.parse(localStorage.getItem("configSingle") as string);
 
-export let currentConfig = configGame[curConfig.difficulty]
-
-export function resetSpeed() {
-    currentConfig.speed = currentConfig.originSpeed;
+// export let currentConfig = configGame[curConfig.difficulty]
+export function getSpeed(currentConfig: configSingle) {
+    return configGame[currentConfig.difficulty];
 }
+// export function resetSpeed() {
+//     currentConfig.speed = currentConfig.originSpeed;
+// }
 
-export function updateState() {
-    curConfig = JSON.parse(localStorage.getItem("configSingle") as string);
-    currentConfig = configGame[curConfig.difficulty];
-    resetSpeed();
-}
+// export function updateState() {
+//     curConfig = JSON.parse(localStorage.getItem("configSingle") as string);
+//     currentConfig = configGame[curConfig.difficulty];
+//     resetSpeed();
+// }

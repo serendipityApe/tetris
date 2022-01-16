@@ -1,7 +1,9 @@
-import { currentConfig } from "./config";
+// import { currentConfig } from "./config";
+import { StateManagement } from './StateManagement'
 import { BoxType } from "./box";
 import deepClone from "./utils/deepClone";
 
+const currentConfig = new StateManagement().getCurrentConfig();
 const gameCol = currentConfig.col
 const gameRow = currentConfig.row
 //初始化map

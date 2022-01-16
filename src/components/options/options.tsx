@@ -29,8 +29,7 @@ export const Options = (props: Props) => {
           <li
             className="online"
             onClick={() => {
-              // navigate("/mult");
-              alert('该域名暂不支持该模式,请到http://118.195.129.130:5678体验测试版')
+              navigate("/mult");
               // setPattern("mult");
               // setGameoverHandler(() => {
               //   setPattern("option");

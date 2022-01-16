@@ -9,7 +9,7 @@ export function initMessage(name: string, isHost: boolean) {
     let arr = nameSpace.split('-');
     const roomId = arr[arr.length - 2];
     // http://118.195.129.130/
-    socket = io(`http://localhost:3001/${nameSpace}`, {
+    socket = io(`http://118.195.129.130:9999/${nameSpace}`, {
         forceNew: false,
         auth: {
             name: name,
