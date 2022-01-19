@@ -96,12 +96,13 @@ const Game: React.FC<Props> = (props) => {
   return (
     <div className="gameZone">
       <div className="gameWindow">
+        {/* <div className="container"></div> */}
         {map.map((item, i) => {
           return (
-            <div style={{ display: "flex" }} key={i}>
+            <div style={{ display: "flex" }} className="row" key={i}>
               {item.map((item2, j) => {
                 return (
-                  <div key={j}>
+                  <div key={j} className="row_item">
                     <Block type={mapRef.current[i][j]}></Block>
                   </div>
                 );

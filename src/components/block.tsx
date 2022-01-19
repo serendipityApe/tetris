@@ -25,7 +25,8 @@ export const Block = (props: Props) => {
         backgroundColor: typeToColorMap[props.type],
         width: "20px",
         height: "20px",
-        margin: "2px",
+        border: `1px solid ${typeToColorMap[-2]}`,
+        boxShadow: "inset 0 0 1px 1px white",
         color: "whitesmoke",
       }}
     >
