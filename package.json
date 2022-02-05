@@ -48,5 +48,9 @@
   },
   "devDependencies": {
     "@types/uniqid": "^5.3.1"
+  },
+  "resolutions": {
+    "babel-jest": "26.6.0",
+    "jest": "26.6.0"
   }
 }
