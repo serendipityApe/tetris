@@ -1,22 +1,63 @@
-import { getSpeed } from './config'
+import { getConfig } from './config'
 
 interface StateManagementType {
-    _speed: number
+    _speed: number;
+    _score: number;
+    _grade: number;
 }
 export class StateManagement implements StateManagementType {
-    currentConfig = getSpeed(JSON.parse(localStorage.getItem("configSingle") as string));
+    currentConfig = getConfig(JSON.parse(localStorage.getItem("configSingle") as string));
     _speed: number = 0;
+    _score: number = 0;
+    _grade: number;
     constructor() {
         this.initSpeed();
+        this._grade = this.currentConfig.grade;
     }
+    //score相关
+    addScore(lanes: number) {
+        //根据同时消的行数与难度依次提高分数
+        //simple：2 4 8 16
+        //hardest: 8 16 32 64
+        this._score += this._grade << lanes;
+        console.log(this._score);
+        this.isSpeedUp(this._score);
+    }
+    getScore() {
+        return this._score;
+    }
+    //speed相关
     initSpeed() {
         this._speed = this.currentConfig.originSpeed;
     }
+    isSpeedUp(score: number) {
+        //当分数等于指定值时，提高速度 
+        //6 12 24 48 / 12 24 48 96 / 24 48 96 192 / 48 96 192 384
+        //ps:埋个彩蛋，可以通过灵活的消行来跳过判断
+        let nodes = [0b000011 << this._grade, 0b000110 << this._grade, 0b001100 << this._grade, 0b011000 << this._grade];
+        switch (score) {
+            case nodes[0]:
+                this.speedUp();
+                break;
+            case nodes[1]:
+                this.speedUp();
+                break;
+            case nodes[2]:
+                this.speedUp();
+                break;
+            case nodes[3]:
+                this.speedUp();
+                break;
+            default: break;
+        }
+    }
     speedUp() {
+        console.log('upup')
         this._speed = this._speed * this.currentConfig.speedFactor;
         if (this._speed < this.currentConfig.speedMin) {
             this._speed = this.currentConfig.speedMin;
         }
+        console.log('speed:'+this._speed);
     }
     resetSpeed() {
         this.initSpeed();
@@ -27,7 +68,7 @@ export class StateManagement implements StateManagementType {
     getSpeed() {
         return this._speed;
     }
-    getCurrentConfig(){
+    getCurrentConfig() {
         return this.currentConfig;
     }
 }

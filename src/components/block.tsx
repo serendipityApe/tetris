@@ -4,7 +4,7 @@ interface Props {
   type: number;
 }
 
-export const Block = (props: Props) => {
+const Block = (props: Props) => {
   const configTheme = JSON.parse(
     localStorage.getItem("configSingle") as string
   ).theme;
@@ -34,3 +34,4 @@ export const Block = (props: Props) => {
     </div>
   );
 };
+export default Block;

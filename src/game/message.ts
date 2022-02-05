@@ -26,7 +26,7 @@ export function initMessage(name: string, isHost: boolean) {
     socket.on("limitUser", () => {
         alert("当前房间人数已达上限，您可以自己创建新房间");
         window.location.href = "/mult";
-      });
+    });
 }
 export const message = {
     on(...args: [ev: string, listener: (...args: any[]) => void]) {

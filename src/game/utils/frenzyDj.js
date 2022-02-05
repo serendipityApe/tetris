@@ -13,7 +13,7 @@ const bgms = [
   "1469528509",
   "1465439543",
   "1852267527",
-//
+  //
   "1436490143",
   "1489366510",
   "1418852960",
@@ -26,9 +26,10 @@ const bgms = [
   "1849656584",
 ];
 
-function randomGetBgm(){
-  
-  return `http://music.163.com/song/media/outer/url?id=${bgms[Math.floor(Math.random() * bgms.length)]}.mp3`
+function randomGetBgm() {
+  return `http://music.163.com/song/media/outer/url?id=${
+    bgms[Math.floor(Math.random() * bgms.length)]
+  }.mp3`;
 }
 //http://music.163.com/song/media/outer/url?id=1391479812.mp3
 //https://nd002723.github.io/carnival/audio/Martin%20Jensen%20-%20Fox%20(Loop%20Remix).mp3
@@ -124,10 +125,21 @@ function letDance() {
     e.addEventListener(
       "canplay",
       function () {
+        let _index=0;
+        let _preStage = setInterval(() => {
+          if(_index === preNodes.length){
+            clearInterval(_preStage);
+            return;
+          }
+          x(preNodes[_index]);
+          _index++;
+        },500);
+        /* //第一行代码
         setTimeout(function () {
           x(k);
-        }, 500);
+        }, 500); */
         setTimeout(function () {
+          if(_preStage) clearInterval(_preStage);
           N();
           p();
           for (var e = 0; e < O.length; e++) {
@@ -179,7 +191,9 @@ function letDance() {
   var l = "mw_added_css"; //最终要移除的css
   var b = g();
   var w = y();
-  var C = document.getElementsByTagName("*");
+  // var C = document.getElementsByTagName("*");
+  var C = document.querySelectorAll(".gameWindow *");
+  const preNodes = document.querySelectorAll(".gameWindow .row");
   var k = null;
   for (var L = 0; L < C.length; L++) {
     var targetDiv = C[L];
@@ -229,3 +243,7 @@ export function beginDJ() {
 export function getState() {
   return _djState;
 }
+
+// window._admin = {
+//   beginDJ: beginDJ,
+// };

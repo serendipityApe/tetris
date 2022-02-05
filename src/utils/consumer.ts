@@ -9,8 +9,9 @@ const consumer = (fn: Function, time: number) => {
                 if (tasks.length <= 0) {
                     window.clearInterval(timer!);
                     timer = null;
+                } else {
+                    tasks.shift()!.call(undefined);
                 }
-                tasks.shift()!.call(undefined);
             }, time)
         }
     }

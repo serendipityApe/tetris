@@ -6,8 +6,10 @@ import {
   getEmitter,
   initAloneGame,
   gameoverAll,
+  ExternalState,
 } from "../../game";
-import { Block } from "../block";
+import Block from "../block";
+import Score from "../score";
 import "./game.scss";
 import isMobile from "../../game/utils/checkServices";
 interface Props {
@@ -23,6 +25,8 @@ const Game: React.FC<Props> = (props) => {
     mapRef.current = _map;
     setMap(mapRef.current);
   };
+  // const currentGame = React.useRef<ExternalState | null>(null);
+  const [score, setScore] = React.useState(0);
   useEffect(() => {
     getEmitter().on("startGame", () => {
       console.log("接收到开始命令");
@@ -31,14 +35,17 @@ const Game: React.FC<Props> = (props) => {
       } else if (props.type === "rival") {
         initRivalGame(mapRef, setMapRef);
       } else {
-        initAloneGame(mapRef, setMapRef);
+        let cG = initAloneGame(mapRef, setMapRef);
+        cG.getEmitter().on("addScore", () => {
+          setScore(cG.getScore());
+        });
       }
     });
     return () => {
       gameoverAll();
       console.log("注销");
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const longPressureListener = React.useRef<{
     inter: NodeJS.Timeout | null;
@@ -95,6 +102,7 @@ const Game: React.FC<Props> = (props) => {
   // }, [isStarted]);
   return (
     <div className="gameZone">
+      {props.type === "alone" ? <Score score={score}></Score> : ""}
       <div className="gameWindow">
         {/* <div className="container"></div> */}
         {map.map((item, i) => {

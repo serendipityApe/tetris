@@ -30,31 +30,35 @@ export const configGame = {
         speed: 1500,
         speedFactor: 0.8,
         speedMin: 500,
-        originSpeed: 1500
+        originSpeed: 1500,
+        grade: 1
     },
     common: {
         row: 10,
         col: 16,
         speed: 1000,
-        speedFactor: 0.6,
-        speedMin: 300,
-        originSpeed: 1000
+        speedFactor: 0.7,
+        speedMin: 400,
+        originSpeed: 1000,
+        grade: 2
     },
     hard: {
         row: 10,
         col: 16,
         speed: 500,
-        speedFactor: 0.4,
+        speedFactor: 0.6,
         speedMin: 200,
-        originSpeed: 800
+        originSpeed: 500,
+        grade: 3
     },
     hardest: {
         row: 10,
         col: 16,
         speed: 300,
-        speedFactor: 0.4,
+        speedFactor: 0.2,
         speedMin: 50,
-        originSpeed: 300
+        originSpeed: 300,
+        grade: 4
     }
 }
 
@@ -91,7 +95,7 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
 // let curConfig: configSingle = JSON.parse(localStorage.getItem("configSingle") as string);
 
 // export let currentConfig = configGame[curConfig.difficulty]
-export function getSpeed(currentConfig: configSingle) {
+export function getConfig(currentConfig: configSingle) {
     return configGame[currentConfig.difficulty];
 }
 // export function resetSpeed() {

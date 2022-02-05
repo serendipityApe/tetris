@@ -10,7 +10,7 @@ export class Alone {
         this._game._emitter.on('gameover', this.gameLose.bind(this));
         let configSingle = JSON.parse(localStorage.getItem('configSingle') as string);
         if (configSingle.pattern === 'dj') {
-            this._game._emitter.on('eliminateLine', this.DJ)
+            this._game._emitter.on('eliminateLine', this.DJ);
         }
         if (isMobile()) {
 

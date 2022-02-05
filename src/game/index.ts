@@ -5,9 +5,12 @@ import { initMessage } from './message';
 import { Rival } from './Rival';
 import mitt from 'mitt';
 import { Alone } from './alone';
-
 const emitter = mitt();
 
+export type ExternalState = {
+    getScore: () => number
+    getEmitter: () => any
+}
 export function getEmitter() {
     return emitter;
 }
@@ -23,10 +26,11 @@ export function initGameSelf() {
 let singleGame: Game;
 let alone: Alone;
 
-export function initAloneGame(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
+export function initAloneGame(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function): ExternalState {
     initMap(setMapRef);
     singleGame = new Game(mapRef, setMapRef);
     alone = new Alone(singleGame);
+    return { getEmitter: singleGame.getEmitter.bind(singleGame), getScore: singleGame.getGameState().getScore.bind(singleGame.getGameState()) };
 }
 
 
@@ -36,6 +40,7 @@ export function initSelfGame(mapRef: React.MutableRefObject<number[][]>, setMapR
     initMap(setMapRef);
     selfGame = new Game(mapRef, setMapRef);
     player = new Player(selfGame);
+
 }
 
 let rivalGame: Game;
@@ -45,7 +50,7 @@ export function initRivalGame(mapRef: React.MutableRefObject<number[][]>, setMap
     rivalGame = new Game(mapRef, setMapRef);
     rivalPlayer = new Rival(rivalGame);
 }
-export function getRival(){
+export function getRival() {
     return rivalPlayer;
 }
 

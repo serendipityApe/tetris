@@ -1,11 +1,11 @@
 // ticker
-let startTime = Date.now();
+let startTime = performance.now();
 function handleFrame() {
-    let time = Date.now() - startTime;
+    let time = performance.now() - startTime;
     tickers.forEach((ticker) => {
         ticker.fn.call(ticker.listener, time);
     });
-    startTime = Date.now();
+    startTime = performance.now();
     requestAnimationFrame(handleFrame);
 }
 requestAnimationFrame(handleFrame);

@@ -116,7 +116,7 @@ export const MultGame = (props: Props) => {
             />
             <button
               onClick={() => {
-                initGameAndReceive();
+                // initGameAndReceive();
                 setMyName(localStorage.getItem("myName"));
               }}
             >

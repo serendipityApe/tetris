@@ -1,4 +1,4 @@
-
+//矩阵操作相关
 export function getBoxBottomPoints(matrix: number[][]) {
     //[1,1,1]
     //[1,0,0]

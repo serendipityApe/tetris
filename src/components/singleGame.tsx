@@ -46,7 +46,7 @@ export const SingleGame = (props: Props) => {
           marginTop: "8rem",
         }}
       >
-        <Game type="single"></Game>
+        <Game type="alone"></Game>
       </div>
     </div>
   );

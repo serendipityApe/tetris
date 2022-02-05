@@ -9,21 +9,28 @@ import { StateManagement } from "./StateManagement";
 import { addTicker, removeTicker } from "./ticker";
 import mitt from "mitt";
 import deepClone from "./utils/deepClone";
-
 export class Game {
     private _mapRef: React.MutableRefObject<number[][]>;
     private _setMapRef: Function;
     private _activeBox: any; // -> boxtype
     private _createBoxStrategy: any;
     private _stateManagement: StateManagement
-    private _isDown: Function = () => false
     constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
         this._mapRef = mapRef;
         // this._activeBox = box;
         this._setMapRef = setMapRef;
         this._stateManagement = new StateManagement();
-        console.log(this._stateManagement.getSpeed())
-        this._isDown = intervalTimer(this._stateManagement.getSpeed())
+        /*
+        //暴漏分数添加函数，方便测试用 
+        const that = this;
+        let test = function (lane: number) {
+            that._stateManagement.addScore(lane);
+            that._emitter.emit('addScore')
+        }
+        // @ts-ignore
+        window._admin = {
+            addScore: test
+        }; */
     }
     start() {
         this.addBox();
@@ -36,10 +43,13 @@ export class Game {
     }
 
     _isAutoDown = true;
-    handleBoxMoveDown(n: number) {
+    _n = 0;
+    handleBoxMoveDown(i: number) {
         // if (!this._game) return;
         if (this._isAutoDown) {
-            if (this._isDown(n)) {
+            this._n += i;
+            if (this._n >= this._stateManagement.getSpeed()) {
+                this._n = 0;
                 this.moveBoxToDown();
                 // message.emit('moveBoxToDown')
                 this._emitter.emit('moveBoxToDown')
@@ -50,6 +60,9 @@ export class Game {
         render(this._activeBox, this._mapRef, this._setMapRef);
     }
     _emitter = mitt();
+    getEmitter() {
+        return this._emitter;
+    }
     moveBoxToDown() {
         if (
             hitBottomBorder(this._activeBox, this._mapRef.current) ||
@@ -59,7 +72,9 @@ export class Game {
             let lines = isEliminateLine(this._mapRef);
             if (lines.length) {
                 eliminateLine(this._mapRef, this._setMapRef, lines);
-                this._emitter.emit('eliminateLine', lines.length)
+                this._emitter.emit('eliminateLine', lines.length);
+                this._stateManagement.addScore(lines.length);
+                this._emitter.emit('addScore')
             }
             if (isBoxOverFlow(this._mapRef.current)) {
                 removeTicker(this.handleTicker, this);
@@ -134,5 +149,8 @@ export class Game {
         // removeTicker(this.handleTicker, this);
         // this._emitter.all.clear();
         // getGameoverHandler()();
+    }
+    getGameState() {
+        return this._stateManagement;
     }
 }
