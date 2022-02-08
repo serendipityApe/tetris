@@ -69,8 +69,7 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         2: "#B2BF88",
         3: "#1E7870",
         4: "#218C47",
-        [-1]: '#1E7870',
-        [-2]: '#c1dfc4'
+        [-99]: '#c1dfc4'
     },
     blue: {
         0: "#e0f1f4",
@@ -78,8 +77,7 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         2: "#3cbce5",
         3: "#8ec1ea",
         4: "#3bbee8",
-        [-1]: '#2e59a7',
-        [-2]: '#ace0f9'
+        [-99]: '#ace0f9'
     },
     yellow: {
         // #ECD9C7
@@ -88,8 +86,10 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         2: "#AA9649",
         3: "#9f5221",
         4: "#DA9233",
-        [-1]: '#FDCF00',
-        [-2]: '#e2d1c3'
+        [-99]: '#e2d1c3'
+    },
+    classic: {
+
     }
 }
 // let curConfig: configSingle = JSON.parse(localStorage.getItem("configSingle") as string);

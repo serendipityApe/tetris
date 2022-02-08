@@ -28,7 +28,7 @@ export const SingleGame = (props: Props) => {
             position: "absolute",
             top: "20px",
             left: "20px",
-            fill: `${themeConfig[configTheme  ][-1]}`,
+            fill: `${themeConfig[configTheme  ][-99]}`,
             cursor: "pointer",
           }}
         >
