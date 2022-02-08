@@ -63,12 +63,17 @@ export const configGame = {
 }
 
 export const themeConfig: { [key: string]: { [key: number]: string } } = {
+    //0: 背景底色
+    //-99: 背景边框颜色及衍生物颜色
+    //1-n: 下落中方块颜色
+    //-1: 堆积方块颜色
     green: {
         0: "#CADCB6",
         1: "#1F8258",
         2: "#B2BF88",
         3: "#1E7870",
         4: "#218C47",
+        [-1]: '#1E7870',
         [-99]: '#c1dfc4'
     },
     blue: {
@@ -77,6 +82,7 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         2: "#3cbce5",
         3: "#8ec1ea",
         4: "#3bbee8",
+        [-1]: '#2e59a7',
         [-99]: '#ace0f9'
     },
     yellow: {
@@ -86,6 +92,7 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         2: "#AA9649",
         3: "#9f5221",
         4: "#DA9233",
+        [-1]: '#FDCF00',
         [-99]: '#e2d1c3'
     },
     classic: {
