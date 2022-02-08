@@ -28,7 +28,7 @@ export const SingleGame = (props: Props) => {
             position: "absolute",
             top: "20px",
             left: "20px",
-            fill: `${themeConfig[configTheme  ][-99]}`,
+            fill: `${themeConfig[configTheme][-99]}`,
             cursor: "pointer",
           }}
         >
@@ -38,10 +38,6 @@ export const SingleGame = (props: Props) => {
       <div
         className="gaming"
         style={{
-          // position: "absolute",
-          // top: "50%",
-          // left: "50%",
-          // transform: "translate(-50%,-50%)",
           display: "inline-block",
           marginTop: "8rem",
         }}
