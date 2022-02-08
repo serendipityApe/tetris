@@ -24,7 +24,7 @@ const Score = (props: Props) => {
   }, [callbackConsumer]);
   return (
     <div className="gameScore">
-      <span className="label">score:</span>
+      <span className="label">score: </span>
       <span className="score">{props.score}</span>
       {processFlag ? (
         <span className="process">+{processFlag}</span>
