@@ -6,6 +6,7 @@ import { initGameMult, startGame } from "../game";
 import { debounce } from "../utils/debounce";
 import Background from "./background";
 import { useLocation } from "react-router-dom";
+import Button from "./button";
 interface Props {}
 
 export const MultGame = (props: Props) => {
@@ -48,59 +49,33 @@ export const MultGame = (props: Props) => {
     <div>
       {myName ? (
         <div>
-          {/* <div
-            className="return"
-            onClick={() => {
-              forceOverSelfGame();
-            }}
-          >
-            <svg
-              className="icon"
-              aria-hidden="true"
-              style={{
-                width: "50px",
-                height: "50px",
-                position: "absolute",
-                top: "20px",
-                left: "20px",
-                fill: "#1E7870",
-                cursor: "pointer",
-              }}
-            >
-              <use xlinkHref="#icon-fanhui"></use>
-            </svg>
-          </div> */}
           <div
             className="gaming"
             style={{
               display: "flex",
               justifyContent: "space-around",
-              //   position: "absolute",
-              //   top: "50%",
-              //   left: "50%",
-              //   transform: "translate(-50%,-50%)",
             }}
           >
             <div>
               <Game type="self"></Game>
-              {myName}
+              <p>{myName}</p>
               {isHost.current ? (
-                <button
-                  onClick={() => {
-                    console.log("发起hostStartGame");
+                <Button
+                  height="2rem"
+                  callback={() => {
                     message.emit("hostStartGame");
                     startGame();
                   }}
                 >
                   开始游戏
-                </button>
+                </Button>
               ) : (
                 ""
               )}
             </div>
             <div>
               <Game type="rival"></Game>
-              {isHost.current ? rival : getHost()}
+              <p>{isHost.current ? rival : getHost()}</p>
             </div>
           </div>
         </div>

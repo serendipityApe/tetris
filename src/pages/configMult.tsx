@@ -4,6 +4,7 @@ import uniqid from "uniqid";
 import "./createRoom.scss";
 import { useNavigate } from "react-router-dom";
 import { themeConfig } from "../game/config";
+import Button from "../components/button";
 interface Props {}
 
 const ConfigMult = (props: Props) => {
@@ -42,13 +43,9 @@ const ConfigMult = (props: Props) => {
             <label htmlFor="房间名">房间名</label>
           </div>
         </div>
-        <button
-          className="button"
-          style={{
-            backgroundColor: themeConfig[configTheme][-99],
-            border: `1px solid ${themeConfig[configTheme][-99]}`,
-          }}
-          onClick={() => {
+        <Button
+          width="230px"
+          callback={() => {
             localStorage.setItem("myName", nickName as string);
             navigate(`dRoom-${uniqid()}-${nickName}`, {
               replace: true,
@@ -58,7 +55,7 @@ const ConfigMult = (props: Props) => {
           }}
         >
           创建房间
-        </button>
+        </Button>
       </div>
     </Background>
   );
