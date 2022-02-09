@@ -5,6 +5,7 @@ import "./createRoom.scss";
 import { useNavigate } from "react-router-dom";
 import { themeConfig } from "../game/config";
 import Button from "../components/button";
+import copy from "../utils/copy";
 interface Props {}
 
 const ConfigMult = (props: Props) => {
@@ -47,9 +48,13 @@ const ConfigMult = (props: Props) => {
           width="230px"
           callback={() => {
             localStorage.setItem("myName", nickName as string);
-            navigate(`dRoom-${uniqid()}-${nickName}`, {
+            const roomId = `dRoom-${uniqid()}-${nickName}`;
+            navigate(roomId, {
               replace: true,
               state: { nickName },
+            });
+            copy(`${window.location.href}`, () => {
+              alert("房间地址已复制，发送给好友开始对战");
             });
             // initGame();
           }}
