@@ -57,7 +57,7 @@ export class StateManagement implements StateManagementType {
         if (this._speed < this.currentConfig.speedMin) {
             this._speed = this.currentConfig.speedMin;
         }
-        console.log('speed:'+this._speed);
+        console.log('speed:' + this._speed);
     }
     resetSpeed() {
         this.initSpeed();
@@ -70,5 +70,22 @@ export class StateManagement implements StateManagementType {
     }
     getCurrentConfig() {
         return this.currentConfig;
+    }
+}
+
+export class MStateManagement extends StateManagement {
+    currentConfig = {
+        row: 10,
+        col: 16,
+        speed: 1000,
+        speedFactor: 0.7,
+        speedMin: 400,
+        originSpeed: 1000,
+        grade: 2
+    };
+    constructor() {
+        super();
+        this._grade = 1;
+        this.initSpeed();
     }
 }

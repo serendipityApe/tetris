@@ -1,5 +1,5 @@
 import { initMap } from './map'
-import { Game } from './game';
+import { Game, MGame } from './game';
 import { Player } from './Player';
 import { initMessage } from './message';
 import { Rival } from './Rival';
@@ -26,6 +26,7 @@ export function initGameSelf() {
 let singleGame: Game;
 let alone: Alone;
 
+//单人游戏
 export function initAloneGame(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function): ExternalState {
     initMap(setMapRef);
     singleGame = new Game(mapRef, setMapRef);
@@ -34,20 +35,21 @@ export function initAloneGame(mapRef: React.MutableRefObject<number[][]>, setMap
 }
 
 
-let selfGame: Game;
+//双人游戏
+let selfGame: MGame;
 let player: Player;
 export function initSelfGame(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
     initMap(setMapRef);
-    selfGame = new Game(mapRef, setMapRef);
+    selfGame = new MGame(mapRef, setMapRef);
     player = new Player(selfGame);
 
 }
 
-let rivalGame: Game;
+let rivalGame: MGame;
 let rivalPlayer: Rival
 export function initRivalGame(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
     initMap(setMapRef);
-    rivalGame = new Game(mapRef, setMapRef);
+    rivalGame = new MGame(mapRef, setMapRef);
     rivalPlayer = new Rival(rivalGame);
 }
 export function getRival() {

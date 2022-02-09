@@ -1,0 +1,22 @@
+.gaming {
+  display: flex;
+  justify-content: space-around;
+  .self,
+  .rival {
+    margin-top: 6rem;
+  }
+}
+@media screen and (max-width: 376px) {
+  .gaming {
+    justify-content: stretch;
+    .rival {
+      // display: none;
+      transform: scale(0.5);
+      transform-origin: 0 0;
+    }
+    .rival,
+    .self {
+      margin-left: 1rem;
+    }
+  }
+}

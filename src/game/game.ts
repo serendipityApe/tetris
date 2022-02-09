@@ -5,7 +5,7 @@ import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorde
 import { addBoxtoMap, eliminateLine, isEliminateLine } from "./map";
 import intervalTimer from "./utils/intervalTimer";
 // import { moveDownTimeInterval } from ".";
-import { StateManagement } from "./StateManagement";
+import { StateManagement, MStateManagement } from "./StateManagement";
 import { addTicker, removeTicker } from "./ticker";
 import mitt from "mitt";
 import deepClone from "./utils/deepClone";
@@ -14,7 +14,7 @@ export class Game {
     private _setMapRef: Function;
     private _activeBox: any; // -> boxtype
     private _createBoxStrategy: any;
-    private _stateManagement: StateManagement
+    public _stateManagement: StateManagement
     constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
         this._mapRef = mapRef;
         // this._activeBox = box;
@@ -152,5 +152,15 @@ export class Game {
     }
     getGameState() {
         return this._stateManagement;
+    }
+}
+
+// export class SGame extends Game{
+
+// }
+export class MGame extends Game {
+    constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
+        super(mapRef, setMapRef);
+        this._stateManagement = new MStateManagement();
     }
 }

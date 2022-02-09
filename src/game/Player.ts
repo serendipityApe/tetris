@@ -55,15 +55,19 @@ export class Player {
         switch (order) {
             case "ArrowDown":
                 this._game.moveBoxToDown();
+                message.emit('moveBoxToDown')
                 break;
             case "ArrowLeft":
                 this._game.moveBoxToLeft();
+                message.emit('moveBoxToLeft')
                 break;
             case "ArrowRight":
                 this._game.moveBoxToRight();
+                message.emit('moveBoxToRight')
                 break;
             case "ArrowUp":
                 this._game.rotateBox();
+                message.emit('rotateBox')
                 break;
             default: break;
         }

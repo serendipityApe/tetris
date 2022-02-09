@@ -65,7 +65,8 @@ const Game: React.FC<Props> = (props) => {
           );
         })}
       </div>
-      {userAgent.current ? (
+      {userAgent.current &&
+      (props.type === "self" || props.type === "alone") ? (
         <OperateInMobile operationFunc={operateInMobile} />
       ) : (
         ""

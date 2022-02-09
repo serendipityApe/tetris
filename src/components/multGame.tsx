@@ -7,6 +7,7 @@ import { debounce } from "../utils/debounce";
 import Background from "./background";
 import { useLocation } from "react-router-dom";
 import Button from "./button";
+import "./multGame.scss";
 interface Props {}
 
 export const MultGame = (props: Props) => {
@@ -49,14 +50,8 @@ export const MultGame = (props: Props) => {
     <div>
       {myName ? (
         <div>
-          <div
-            className="gaming"
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <div>
+          <div className="gaming">
+            <div className="self">
               <Game type="self"></Game>
               <p>{myName}</p>
               {isHost.current ? (
@@ -73,7 +68,7 @@ export const MultGame = (props: Props) => {
                 ""
               )}
             </div>
-            <div>
+            <div className="rival">
               <Game type="rival"></Game>
               <p>{isHost.current ? rival : getHost()}</p>
             </div>
