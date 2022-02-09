@@ -55,7 +55,7 @@ export const MultGame = (props: Props) => {
           <div className="gaming">
             <div className="self">
               <Game type="self"></Game>
-              <p>{myName}</p>
+              <p className="hostName">{myName}</p>
               {isHost.current && !isGameStart ? (
                 <Button
                   height="2rem"

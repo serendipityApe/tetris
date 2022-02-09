@@ -5,7 +5,6 @@ import "./createRoom.scss";
 import { useNavigate } from "react-router-dom";
 import { themeConfig } from "../game/config";
 import Button from "../components/button";
-import copy from "../utils/copy";
 interface Props {}
 
 const ConfigMult = (props: Props) => {
@@ -53,9 +52,11 @@ const ConfigMult = (props: Props) => {
               replace: true,
               state: { nickName },
             });
-            copy(`${window.location.href}`, () => {
-              alert("房间地址已复制，发送给好友开始对战");
-            });
+            window.navigator.clipboard
+              .writeText(`${window.location.href}`)
+              .then((res) => {
+                alert("房间地址已复制，发送给好友开始对战");
+              });
             // initGame();
           }}
         >
