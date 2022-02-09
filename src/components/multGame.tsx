@@ -14,6 +14,8 @@ export const MultGame = (props: Props) => {
   const [myName, setMyName] = React.useState<string | null>(
     localStorage.getItem("myName")
   );
+  //游戏开始后隐藏开始游戏按钮
+  const [isGameStart, setGS] = React.useState(false);
   const [rival, setRival] = React.useState("待加入......");
 
   React.useEffect(() => {
@@ -54,12 +56,13 @@ export const MultGame = (props: Props) => {
             <div className="self">
               <Game type="self"></Game>
               <p>{myName}</p>
-              {isHost.current ? (
+              {isHost.current && !isGameStart ? (
                 <Button
                   height="2rem"
                   callback={() => {
                     message.emit("hostStartGame");
                     startGame();
+                    setGS(true);
                   }}
                 >
                   开始游戏
