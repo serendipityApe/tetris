@@ -91,10 +91,10 @@ const boxInfos: { [key: number]: { type: number; shape: number[][]; rotateStrate
     5: {
         type: 5,
         shape: [
-            [0, 5, 0],
-            [0, 5, 0],
-            [0, 5, 0],
-            [0, 5, 0]
+            [0, 5, 0, 0],
+            [0, 5, 0, 0],
+            [0, 5, 0, 0],
+            [0, 5, 0, 0]
         ],
         rotateStrategy: [rotate, (m: number[][]) => rotate(rotate(rotate(m)))],
     },
@@ -117,7 +117,7 @@ export function createBoxByType(type: number) {
 }
 function getRandomBoxInfo() {
     const max = Object.keys(boxInfos).length;
-    // const type = 1;
+    // const type = 5;
     const type = Math.floor(Math.random() * max + 1);
     return boxInfos[type];
 }
