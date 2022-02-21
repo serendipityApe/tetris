@@ -88,16 +88,16 @@ const boxInfos: { [key: number]: { type: number; shape: number[][]; rotateStrate
         ],
         rotateStrategy: [rotate, rotate, rotate, rotate],
     },
-
-    // 5: {
-    //     type: 5,
-    //     shape: [
-    //         [0, 0, 6],
-    //         [0, 0, 6],
-    //         [0, 6, 6],
-    //     ],
-    //     rotateStrategy: [rotate, rotate, rotate, rotate],
-    // },
+    5: {
+        type: 5,
+        shape: [
+            [0, 5, 0],
+            [0, 5, 0],
+            [0, 5, 0],
+            [0, 5, 0]
+        ],
+        rotateStrategy: [rotate, (m: number[][]) => rotate(rotate(rotate(m)))],
+    },
 };
 export function createBox(options: { x?: number; y?: number; shape?: number[][]; type?: number } = {}) {
     let { x, y, shape, type } = options

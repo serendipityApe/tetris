@@ -73,6 +73,7 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         2: "#B2BF88",
         3: "#1E7870",
         4: "#218C47",
+        5: "#218C47",
         [-1]: '#1E7870',
         [-99]: '#c1dfc4'
     },
@@ -82,6 +83,7 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         2: "#3cbce5",
         3: "#8ec1ea",
         4: "#3bbee8",
+        5: "#3bbee8",
         [-1]: '#2e59a7',
         [-99]: '#ace0f9'
     },
@@ -92,6 +94,7 @@ export const themeConfig: { [key: string]: { [key: number]: string } } = {
         2: "#AA9649",
         3: "#9f5221",
         4: "#DA9233",
+        5: "#DA9233",
         [-1]: '#FDCF00',
         [-99]: '#e2d1c3'
     },
