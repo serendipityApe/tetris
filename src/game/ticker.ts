@@ -13,7 +13,6 @@ requestAnimationFrame(handleFrame);
 const tickers: Array<{ fn: Function; listener: any }> = [];
 export function addTicker(fn: Function, listener: any) {
     tickers.push({ fn, listener });
-
 }
 export function removeTicker(fn: Function, listeners: any) {
     for (let i = 0; i < tickers.length; i++) {

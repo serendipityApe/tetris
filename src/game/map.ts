@@ -71,3 +71,4 @@ export function addLine(map: React.MutableRefObject<number[][]>, setMapRef: Func
     _map.push(line);
     setMapRef(_map);
 }
+

@@ -1,5 +1,5 @@
 import { rotate } from "./matrix";
-
+// import { NewGame } from "./game";
 export interface BoxType {
     x: number;
     y: number;
@@ -60,7 +60,6 @@ const boxInfos: { [key: number]: { type: number; shape: number[][]; rotateStrate
             [1, 1],
         ],
     },
-
     2: {
         type: 2,
         shape: [
@@ -104,6 +103,24 @@ export function createBox(options: { x?: number; y?: number; shape?: number[][];
     return new Box({ x, y, shape, type });
 }
 //使用工厂模式创建Box
+export function new_randomCreateBox(boxInfos: { [key: number]: { type: number; shape: number[][]; rotateStrategy?: any[] } }) {
+    function getRandomBoxInfo() {
+        const max = Object.keys(boxInfos).length;
+        // const type = 5;
+        const type = Math.floor(Math.random() * max + 1);
+        return boxInfos[type];
+    }
+    const { type } = getRandomBoxInfo();
+    return new_createBoxByType(type, boxInfos);
+}
+export function new_createBoxByType(type: number, boxInfos: { [key: number]: { type: number; shape: number[][]; rotateStrategy?: any[] } }) {
+    const box = new Box({ type });
+    const { shape, rotateStrategy } = boxInfos[type];
+    box.setRotate(rotateStrategy);
+    box.shape = shape;
+    return box;
+}
+
 export function randomCreateBox() {
     const { type } = getRandomBoxInfo();
     return createBoxByType(type);

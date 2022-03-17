@@ -55,7 +55,8 @@ export class Player {
         switch (order) {
             case "ArrowDown":
                 this._game.moveBoxToDown();
-                message.emit('moveBoxToDown')
+                // message.emit('moveBoxToDown') 
+                //将this._game.getEmitter().emit('moveBoxToDown')放入
                 break;
             case "ArrowLeft":
                 this._game.moveBoxToLeft();
@@ -76,7 +77,7 @@ export class Player {
         switch (e.code) {
             case "ArrowDown":
                 this._game.moveBoxToDown();
-                message.emit('moveBoxToDown')
+                // message.emit('moveBoxToDown')
                 break;
             case "ArrowLeft":
                 this._game.moveBoxToLeft();

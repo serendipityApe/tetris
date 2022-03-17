@@ -1,12 +1,12 @@
-import { randomCreateBox } from "./box";
-import { Game } from "./game";
+// import { randomCreateBox } from "./box";
+import { NewGame } from "./game";
 import isMobile from './utils/checkServices'
 import { beginDJ, getState } from "./utils/frenzyDj";
 export class Alone {
-    private _game: Game;
-    constructor(game: Game) {
+    private _game: NewGame;
+    constructor(game: NewGame) {
         this._game = game;
-        this._game.setCreateBoxStrategy(this.createBoxStrategy.bind(this));
+        // this._game.setCreateBoxStrategy(this.createBoxStrategy.bind(this));
         this._game._emitter.on('gameover', this.gameLose.bind(this));
         let configSingle = JSON.parse(localStorage.getItem('configSingle') as string);
         if (configSingle.pattern === 'dj') {
@@ -17,12 +17,11 @@ export class Alone {
         } else {
             window.onkeydown = this.handlerKeyDown.bind(this)
         }
-        // window.addEventListener('keydown', this.handlerKeyDown.bind(this))
     }
-    createBoxStrategy() {
-        const box = randomCreateBox();
-        return box;
-    }
+    // createBoxStrategy() {
+    //     const box = randomCreateBox();
+    //     return box;
+    // }
     DJ() {
         if (!getState()) {
             beginDJ();

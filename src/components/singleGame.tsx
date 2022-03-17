@@ -1,6 +1,6 @@
 import React from "react";
 import Game from "./game/game";
-import { forceOverSelfGame, initGameSelf } from "../game";
+import { gameoverAll, initGameSelf } from "../game";
 import { themeConfig } from "../game/config";
 interface Props {}
 
@@ -16,7 +16,7 @@ export const SingleGame = (props: Props) => {
       <div
         className="return"
         onClick={() => {
-          forceOverSelfGame();
+          gameoverAll();
         }}
       >
         <svg

@@ -7,7 +7,7 @@ const More = (props: Props) => {
     <Background>
       <div className="more" style={{ color: "whitesmoke" }}>
         {/* <p>基于react,nodejs,websocket制作。</p> */}
-        <p>
+        {/* <p>
           GitHub：
           <a
             style={{ color: "whitesmoke" }}
@@ -15,7 +15,7 @@ const More = (props: Props) => {
           >
             https://github.com/serendipityApe/tetris
           </a>
-        </p>
+        </p> */}
         <p>
           bug反馈：
           <a

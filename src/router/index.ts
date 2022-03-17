@@ -3,6 +3,7 @@ import { Options } from "../components/options/options";
 import { SingleGame } from "../components/singleGame";
 import ConfigMult from "../pages/configMult";
 import Configuration from "../pages/configuration";
+import CoreStrategy from "../pages/coreStrategy";
 import Help from "../pages/help";
 import More from "../pages/more";
 type Router = {
@@ -26,6 +27,10 @@ export const mainRouter: Router = [
     {
         path: 'config',
         component: Configuration
+    },
+    {
+        path: 'config/coreStrategy',
+        component: CoreStrategy
     },
     {
         path: '/single',

@@ -8,7 +8,7 @@ export function initMessage(name: string, isHost: boolean) {
     const nameSpace = pathArr[pathArr.length - 1];
     let arr = nameSpace.split('-');
     const roomId = arr[arr.length - 2];
-    // http://118.195.129.130/
+    // http://118.195.129.130:9999/
     socket = io(`http://118.195.129.130:9999/${nameSpace}`, {
         forceNew: false,
         auth: {
@@ -24,8 +24,9 @@ export function initMessage(name: string, isHost: boolean) {
         console.log('链接成功');
     })
     socket.on("limitUser", () => {
-        alert("当前房间人数已达上限，您可以自己创建新房间");
-        window.location.href = "/mult";
+        // alert("当前房间人数已达上限，您可以自己创建新房间");
+        // window.location.href = "/mult";
+        console.log('limitUser')
     });
 }
 export const message = {

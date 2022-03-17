@@ -1,6 +1,7 @@
 import React from "react";
 import Background from "../background";
 import "./config.scss";
+import isMoble from "../../game/utils/checkServices";
 interface Props {}
 
 const Config = (props: Props) => {
@@ -139,6 +140,18 @@ const Config = (props: Props) => {
             );
           })}
         </div>
+        {isMoble() ? (
+          ""
+        ) : (
+          <div className="core configurationItem">
+            <span className="coreLabel">高级设置:</span>
+            <span className="separator"></span>
+            <a href="/config/coreStrategy">
+              <span>核心策略 </span>
+              <span className="beta"> beta</span>
+            </a>
+          </div>
+        )}
       </div>
     </Background>
   );
