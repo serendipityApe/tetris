@@ -5,7 +5,7 @@ import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorde
 import { addBoxtoMap, eliminateLine, isEliminateLine } from "./map";
 // import { moveDownTimeInterval } from ".";
 import { StateManagement, MStateManagement } from "./StateManagement";
-import { addTicker, removeTicker } from "./ticker";
+import { addTicker, removeTicker, startTicker } from "./ticker";
 import mitt from "mitt";
 import deepClone from "./utils/deepClone";
 import React from "react";
@@ -35,6 +35,7 @@ export class Game {
     start() {
         this.addBox();
         addTicker(this.handleTicker, this);
+        startTicker();
     }
     //游戏开始每帧执行的函数，包括box向下移动与render;
     handleTicker(i: number) {
@@ -179,6 +180,7 @@ export class NewGame {
         this.addBox();
         this.emitStarted();
         addTicker(this.handleTicker, this);
+        startTicker();
     }
     //游戏开始每帧执行的函数，包括box向下移动与render;
     handleTicker(i: number) {

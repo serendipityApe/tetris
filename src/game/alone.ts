@@ -2,6 +2,7 @@
 import { NewGame } from "./game";
 import isMobile from './utils/checkServices'
 import { beginDJ, getState } from "./utils/frenzyDj";
+import { startTicker, suspenceTicker } from "./ticker";
 export class Alone {
     private _game: NewGame;
     constructor(game: NewGame) {
@@ -41,7 +42,9 @@ export class Alone {
     handlerButton(order: string) {
         switch (order) {
             case "ArrowDown":
+                suspenceTicker();
                 this._game.moveBoxToDown();
+                startTicker();
                 break;
             case "ArrowLeft":
                 this._game.moveBoxToLeft();
@@ -58,7 +61,9 @@ export class Alone {
     handlerKeyDown(e: KeyboardEvent) {
         switch (e.code) {
             case "ArrowDown":
+                suspenceTicker();
                 this._game.moveBoxToDown();
+                startTicker();
                 break;
             case "ArrowLeft":
                 this._game.moveBoxToLeft();

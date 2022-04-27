@@ -1,4 +1,4 @@
-import { getConfig } from './config'
+import { getConfig, gameRow, gameCol } from './config'
 
 interface StateManagementType {
     _speed: number;
@@ -75,8 +75,8 @@ export class StateManagement implements StateManagementType {
 
 export class MStateManagement extends StateManagement {
     currentConfig = {
-        row: 10,
-        col: 16,
+        row: gameRow,
+        col: gameCol,
         speed: 1000,
         speedFactor: 0.7,
         speedMin: 400,

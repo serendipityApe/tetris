@@ -25,8 +25,8 @@ export const moveDownTimeInterval = 300
 
 export const configGame = {
     simple: {
-        row: 10,
-        col: 16,
+        row: gameRow,
+        col: gameCol,
         speed: 1500,
         speedFactor: 0.8,
         speedMin: 500,
@@ -34,8 +34,8 @@ export const configGame = {
         grade: 1
     },
     common: {
-        row: 10,
-        col: 16,
+        row: gameRow,
+        col: gameCol,
         speed: 1000,
         speedFactor: 0.7,
         speedMin: 400,
@@ -43,8 +43,8 @@ export const configGame = {
         grade: 2
     },
     hard: {
-        row: 10,
-        col: 16,
+        row: gameRow,
+        col: gameCol,
         speed: 500,
         speedFactor: 0.6,
         speedMin: 200,
@@ -52,8 +52,8 @@ export const configGame = {
         grade: 3
     },
     hardest: {
-        row: 10,
-        col: 16,
+        row: gameRow,
+        col: gameCol,
         speed: 300,
         speedFactor: 0.2,
         speedMin: 50,

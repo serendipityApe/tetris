@@ -4,7 +4,7 @@ interface Props {
   type: number;
 }
 
-const Block = (props: Props) => {
+const Block = React.memo((props: Props) => {
   const configTheme = JSON.parse(
     localStorage.getItem("configSingle") as string
   ).theme;
@@ -23,5 +23,5 @@ const Block = (props: Props) => {
       {/* {props.type} */}
     </div>
   );
-};
+});
 export default Block;
