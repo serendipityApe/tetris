@@ -52,7 +52,6 @@ export class Game {
                 this._n = 0;
                 this.moveBoxToDown();
                 // message.emit('moveBoxToDown')
-                this._emitter.emit('moveBoxToDown')
             }
         }
     }
@@ -87,6 +86,7 @@ export class Game {
             return;
         }
         this._activeBox.y++;
+        this._emitter.emit('moveBoxToDown')
     }
     addBox() {
         this._activeBox = this._createBoxStrategy();
