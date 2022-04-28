@@ -32,7 +32,7 @@ let alone: Alone;
 //单人游戏
 export function initAloneGame(
   mapRef: React.MutableRefObject<number[][]>,
-  setMapRef: Function
+  setMapRef: (_map: number[][]) => void
 ): ExternalState {
   initMap(setMapRef);
   singleGame = new NewGame(mapRef, setMapRef);
@@ -47,7 +47,7 @@ export function initAloneGame(
 
 export function initTestGame(
   mapRef: React.MutableRefObject<number[][]>,
-  setMapRef: Function
+  setMapRef: (_map: number[][]) => void
 ): ExternalState {
   initMap(setMapRef);
   singleGame = new NewGame(mapRef, setMapRef);

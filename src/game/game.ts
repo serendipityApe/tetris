@@ -161,7 +161,7 @@ export class NewGame {
     private _setMapRef: Function;
     private _activeBox: any; // -> boxtype
     public _stateManagement: StateManagement
-    constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
+    constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: (_map: number[][]) => void) {
         this._mapRef = mapRef;
         this._setMapRef = setMapRef;
         this._stateManagement = new StateManagement();
@@ -181,6 +181,7 @@ export class NewGame {
         this.emitStarted();
         addTicker(this.handleTicker, this);
         startTicker();
+        this.render();
     }
     //游戏开始每帧执行的函数，包括box向下移动与render;
     handleTicker(i: number) {
@@ -193,7 +194,13 @@ export class NewGame {
     getEmitter() {
         return this._emitter;
     }
+    // nn = 0;
+    // mm = 0;
+    // moveBoxToDownFlag = false;
     moveBoxToDown() {
+        // if(this.moveBoxToDownFlag) return;
+        // console.log(this.nn++)
+        // this.moveBoxToDownFlag = true;
         if (
             hitBottomBorder(this._activeBox, this._mapRef.current) ||
             hitBottomBox(this._activeBox, this._mapRef.current)
@@ -217,7 +224,9 @@ export class NewGame {
             return;
         }
         this._activeBox.y++;
+        // console.log(this.mm++)
         this._emitter.emit('moveBoxToDown');
+        // this.moveBoxToDownFlag = false;
     }
     addBox() {
         this._activeBox = this.createBoxStrategy();

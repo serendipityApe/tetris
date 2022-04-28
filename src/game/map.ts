@@ -20,6 +20,7 @@ export function initMap(setMapRef: Function) {
     // setMap(_map);
 }
 
+//fixed the end of the box on the map
 export function addBoxtoMap(box: BoxType, map: React.MutableRefObject<number[][]>, setMapRef: Function) {
     let _map: number[][] = deepClone(map.current);
     for (let i = 0; i < box.shape.length; i++) {
