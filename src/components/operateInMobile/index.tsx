@@ -39,7 +39,7 @@ const OperateInMobile = (props: Props) => {
             style={{
               width: "50px",
               height: "50px",
-              fill: `${themeConfig[configTheme][-99]}`,
+              fill: `${themeConfig[configTheme][99]}`,
               cursor: "pointer",
             }}
           >
@@ -76,7 +76,7 @@ const OperateInMobile = (props: Props) => {
             style={{
               width: "50px",
               height: "50px",
-              fill: `${themeConfig[configTheme][-99]}`,
+              fill: `${themeConfig[configTheme][99]}`,
               cursor: "pointer",
             }}
           >
@@ -95,7 +95,7 @@ const OperateInMobile = (props: Props) => {
             style={{
               width: "50px",
               height: "50px",
-              fill: `${themeConfig[configTheme][-99]}`,
+              fill: `${themeConfig[configTheme][99]}`,
               cursor: "pointer",
             }}
           >

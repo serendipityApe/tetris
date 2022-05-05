@@ -1,8 +1,8 @@
 import { BoxType } from "./box";
-import { getBoxBottomPoints, getBoxLeftPoints, getBoxRightPoints, getBoxTopPoints } from "./matrix";
+import { getBoxBottomPoints, getBoxLeftPoints, getBoxRightPoints, getMapTopXToY } from "./matrix";
 
 export function hitBottomBorder(box: BoxType, map: number[][]) {
-    const points = getBoxBottomPoints(box.shape);
+    const { points } = getBoxBottomPoints(box.shape);
     const gameRow = map.length;
     for (let i = 0; i < points.length; i++) {
         if (points[i].y + 1 + box.y >= gameRow) {
@@ -13,7 +13,7 @@ export function hitBottomBorder(box: BoxType, map: number[][]) {
 }
 
 export function hitBottomBox(box: BoxType, map: number[][]) {
-    const points = getBoxBottomPoints(box.shape);
+    const { points } = getBoxBottomPoints(box.shape);
 
     return points.some((point) => {
         // 看看 这个位置上 在 map 里面 是不是有 其他的 box 的
@@ -74,21 +74,23 @@ export function isIllegalBoxInMap(box: BoxType, map: number[][]) {
     return false;
 }
 //获取底部映射距离
-function getMappingModelDistance(box: BoxType, map: number[][]): number {
-    const boxBottomPoints = getBoxBottomPoints(box.shape);
-    const mapTopPoints = getBoxTopPoints(map);
+export function getMappingModelDistance(box: BoxType, map: number[][]): number {
+    const { points: boxBottomPoints, relativeY } = getBoxBottomPoints(box.shape);
+    const mapXtoY = getMapTopXToY(map.slice(box.y + relativeY));
     let distance = map.length;
     for (let i = 0; i < boxBottomPoints.length; i++) {
         let curPoint = boxBottomPoints[i];
-        distance = Math.min(mapTopPoints[curPoint.x].y - curPoint.y, distance);
+        let curPointX = boxBottomPoints[i].x + box.x;
+        const curMapPointY = mapXtoY.has(curPointX) ? mapXtoY.get(curPointX) as number + box.y + relativeY : map.length;
+        distance = Math.min(curMapPointY - (box.y + curPoint.y + 1), distance);
     }
-    return distance - box.y;
+    return distance;
 }
 //获取接触面数量
 export function getContactSurfaceNumber(box: BoxType, map: number[][]): number {
     const distance = getMappingModelDistance(box, map);
     const mappingModelBox = { ...box, x: box.x + distance, y: box.y + distance };
-    const bottomPoints = getBoxBottomPoints(mappingModelBox.shape);
+    const { points: bottomPoints } = getBoxBottomPoints(mappingModelBox.shape);
     const leftPoints = getBoxLeftPoints(mappingModelBox.shape);
     const rightPoints = getBoxRightPoints(mappingModelBox.shape);
     let bottomContactSurface = 0;

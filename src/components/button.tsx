@@ -16,8 +16,8 @@ const Button = (props: Props) => {
     <button
       className="button"
       style={{
-        backgroundColor: themeConfig[configTheme][-99],
-        border: `1px solid ${themeConfig[configTheme][-99]}`,
+        backgroundColor: themeConfig[configTheme][99],
+        border: `1px solid ${themeConfig[configTheme][99]}`,
         color: "whitesmoke",
         borderRadius: "4px",
         width: width,

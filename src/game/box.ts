@@ -8,6 +8,7 @@ export interface BoxType {
     rotate: Function;
     setRotate: Function;
     getNextRotateShapeInAdvance: Function
+    getShadowBox: (distance: number) => Box
 }
 export class Box implements BoxType {
     x: number;
@@ -49,6 +50,16 @@ export class Box implements BoxType {
         if (rotates) {
             this._rotates = rotates;
         }
+    }
+    getShadowBox(distance: number) {
+        let shadowBox = new Box({
+            x: this.x,
+            y: this.y,
+            shape: this.shape,
+            type: 99
+        });
+        shadowBox.y += distance;
+        return shadowBox;
     }
 }
 //使用策略模式控制box旋转方案

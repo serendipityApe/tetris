@@ -15,7 +15,7 @@ const Block = React.memo((props: Props) => {
         backgroundColor: typeToColorMap[props.type],
         width: "20px",
         height: "20px",
-        border: `1px solid ${typeToColorMap[-99]}`,
+        border: `1px solid ${typeToColorMap[99]}`,
         boxShadow: "inset 0 0 1px 1px white",
         color: "whitesmoke",
       }}

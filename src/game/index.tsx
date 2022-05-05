@@ -36,7 +36,11 @@ export function initAloneGame(
 ): ExternalState {
   initMap(setMapRef);
   singleGame = new NewGame(mapRef, setMapRef);
-  singleGame.registerPlugins(Plugins.TickerPlugin, Plugins.CoreStrategyPlugin);
+  singleGame.registerPlugins(
+    Plugins.TickerPlugin,
+    Plugins.CoreStrategyPlugin
+    // Plugins.DownStrategyIsMovePlugin
+  );
   alone = new Alone(singleGame);
   return {
     renderScore: () => {
@@ -54,8 +58,6 @@ export function initTestGame(
   singleGame.registerPlugins(Plugins.CoreStrategyPlugin);
   alone = new Alone(singleGame);
   return {};
-  // return { renderScore: () => { return <ScoreSystemComponent game={ singleGame }/> } }
-  // return { getEmitter: singleGame.getEmitter.bind(singleGame), getScore: singleGame.getGameState().getScore.bind(singleGame.getGameState()) };
 }
 
 //双人游戏
@@ -63,10 +65,11 @@ let selfGame: MGame;
 let player: Player;
 export function initSelfGame(
   mapRef: React.MutableRefObject<number[][]>,
-  setMapRef: Function
+  setMapRef: (_map: number[][]) => void
 ) {
   initMap(setMapRef);
   selfGame = new MGame(mapRef, setMapRef);
+  selfGame.registerPlugins(Plugins.TickerPlugin,Plugins.DownStrategyIsMovePlugin);
   player = new Player(selfGame);
 }
 
@@ -74,10 +77,11 @@ let rivalGame: MGame;
 let rivalPlayer: Rival;
 export function initRivalGame(
   mapRef: React.MutableRefObject<number[][]>,
-  setMapRef: Function
+  setMapRef: (_map: number[][]) => void
 ) {
   initMap(setMapRef);
   rivalGame = new MGame(mapRef, setMapRef);
+  rivalGame.registerPlugins(Plugins.DownStrategyIsMovePlugin);
   rivalPlayer = new Rival(rivalGame);
 }
 export function getRival() {

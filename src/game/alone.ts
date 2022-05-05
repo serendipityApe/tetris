@@ -62,7 +62,7 @@ export class Alone {
         switch (e.code) {
             case "ArrowDown":
                 suspenceTicker();
-                this._game.moveBoxToDown();
+                this._game.controlToDown();
                 startTicker();
                 break;
             case "ArrowLeft":

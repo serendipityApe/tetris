@@ -1,18 +1,18 @@
-import { randomCreateBox } from "./box";
-import { Game } from "./game";
+import { new_randomCreateBox } from "./box";
+import { NewGame } from "./game";
 import isMobile from './utils/checkServices'
 import { message } from "./message";
 import { gameoverAll } from ".";
 import { randomPenaltyStrategy } from "./compete";
 export class Player {
-    private _game: Game;
-    constructor(game: Game) {
+    private _game: NewGame;
+    constructor(game: NewGame) {
         this._game = game;
         this._game.setCreateBoxStrategy(this.createBoxStrategy.bind(this));
         this._game._emitter.on('gameover', this.gameLose.bind(this));
         this._game._emitter.on('moveBoxToDown', () => { message.emit('moveBoxToDown') })
         this._game._emitter.on('eliminateLine', (num) => { message.emit('eliminateLine', num) })
-
+        this._game._emitter.on('controlToDown', () => { message.emit('controlToDown') })
         message.on('createPenaltyStrategy', (num) => {
             let penaltyStrategys = [];
             for (let i = 0; i < num; i++) {
@@ -32,12 +32,10 @@ export class Player {
         } else {
             window.onkeydown = this.handlerKeyDown.bind(this)
         }
-        // window.addEventListener('keydown', this.handlerKeyDown.bind(this))
     }
     createBoxStrategy() {
-        const box = randomCreateBox();
+        const box = new_randomCreateBox(this._game.getBoxInfos());
         message.emit('createBox', box.type);
-        // console.log('发送createBox')
         return box;
     }
     gameLose() {
@@ -76,7 +74,7 @@ export class Player {
     handlerKeyDown(e: KeyboardEvent) {
         switch (e.code) {
             case "ArrowDown":
-                this._game.moveBoxToDown();
+                this._game.controlToDown();
                 // message.emit('moveBoxToDown')
                 break;
             case "ArrowLeft":

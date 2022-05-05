@@ -1,15 +1,16 @@
 import { gameoverAll } from ".";
-import { createBoxByType } from "./box";
-import { Game } from "./game";
+import { new_createBoxByType } from "./box";
+import { NewGame } from "./game";
 import { message } from "./message";
 import { PenaltyStragety } from "./compete";
 export class Rival {
-    private _game: Game;
-    constructor(game: Game) {
+    private _game: NewGame;
+    constructor(game: NewGame) {
         this._game = game;
         message.on("moveBoxToRight", this.moveBoxToRight.bind(this))
         message.on("moveBoxToLeft", this.moveBoxToLeft.bind(this))
         message.on("moveBoxToDown", this.moveBoxToDown.bind(this))
+        message.on("controlToDown", this.controlToDown.bind(this))
         message.on("rotateBox", this.rotateBox.bind(this))
         message.on("createBox", this.createBoxListener.bind(this))
         message.on("gameover", this.gameWon.bind(this))
@@ -28,34 +29,28 @@ export class Rival {
     _boxType = 0;
     _firstAccept = false;
     createBoxListener(info: string) {
-        this._boxType = Number(info)
+        this._boxType = Number(info);
         if (!this._firstAccept) {
-            console.log('rival开始');
             this.start();
             this._firstAccept = true;
+        } else {
+            //由于需要视图同步，a'需要等待a消行并创建新的box.a'需要延迟调用
+            this._game.eliminateLineHandler();
         }
     }
     gameWon() {
         alert('游戏结束,你赢了');
         gameoverAll();
-        // getGameoverHandler()();
     }
     createBoxStrategy() {
-        // const box = randomCreateBox();
-        // return box;
-
-        return createBoxByType(this._boxType);
+        return new_createBoxByType(this._boxType, this._game.getBoxInfos());
     }
     start() {
-        this._game._isAutoDown = false;
+        // this._game._isAutoDown = false;
         this._game.setCreateBoxStrategy(this.createBoxStrategy.bind(this));
         this._game.start();
 
     }
-    // initGame(game: Game) {
-    //     this._game = game;
-
-    // }
     moveBoxToRight() {
         this._game.moveBoxToRight();
     }
@@ -64,6 +59,9 @@ export class Rival {
     }
     moveBoxToDown() {
         this._game.moveBoxToDown();
+    }
+    controlToDown() {
+        this._game.controlToDown(true);
     }
     rotateBox() {
         //可能有问题

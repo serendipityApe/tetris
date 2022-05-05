@@ -1,7 +1,7 @@
 import { BoxType, createBox, new_randomCreateBox } from "./box";
 import render from "./render";
 // import Score from "../components/score";
-import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow, isIllegalBoxInMap } from "./hit";
+import { hitBottomBorder, hitBottomBox, hitLeftBoxAndBorder, hitRightBoxAndBorder, isBoxOverFlow, isIllegalBoxInMap, getMappingModelDistance } from "./hit";
 import { addBoxtoMap, eliminateLine, isEliminateLine } from "./map";
 // import { moveDownTimeInterval } from ".";
 import { StateManagement, MStateManagement } from "./StateManagement";
@@ -158,18 +158,25 @@ export class Game {
 
 export class NewGame {
     private _mapRef: React.MutableRefObject<number[][]>;
-    private _setMapRef: Function;
-    private _activeBox: any; // -> boxtype
+    private _setMapRef: (_map: number[][]) => void;
+    private _createBoxStrategy: Function = this.defaultCreateBoxStrategy;
+    private _activeBox!: BoxType
+    private _activeBoxs !: BoxType[]
+    private _distance: number = 0;
+    private _controlToDownFlag: string = 'teleport'
     public _stateManagement: StateManagement
     constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: (_map: number[][]) => void) {
         this._mapRef = mapRef;
         this._setMapRef = setMapRef;
         this._stateManagement = new StateManagement();
     }
-    //创建box策略
-    createBoxStrategy() {
-        const box = new_randomCreateBox(this.getBoxInfos());
-        return box;
+    //默认创建box策略
+    defaultCreateBoxStrategy() {
+        return new_randomCreateBox(this.getBoxInfos());
+    }
+    setCreateBoxStrategy(strategy: Function) {
+        this._createBoxStrategy = strategy;
+        console.log(this._createBoxStrategy)
     }
     registerPlugins(...Plugins: any[]) {
         Plugins.forEach(Plugin => {
@@ -188,11 +195,27 @@ export class NewGame {
         this.render();
     }
     render() {
-        render(this._activeBox, this._mapRef, this._setMapRef);
+        render(this._activeBoxs, this._mapRef, this._setMapRef);
     }
     _emitter = mitt();
     getEmitter() {
         return this._emitter;
+    }
+    eliminateLineHandler() {
+        addBoxtoMap(this._activeBox, this._mapRef, this._setMapRef);
+        let lines = isEliminateLine(this._mapRef);
+        if (lines.length) {
+            eliminateLine(this._mapRef, this._setMapRef, lines);
+            this._emitter.emit('eliminateLine', lines.length);
+            this._stateManagement.addScore(lines.length);
+            this._emitter.emit('addScore')
+        }
+        if (isBoxOverFlow(this._mapRef.current)) {
+            removeTicker(this.handleTicker, this);
+            this._emitter.emit('gameover');
+            return;
+        }
+        this.addBox();
     }
     // nn = 0;
     // mm = 0;
@@ -201,35 +224,33 @@ export class NewGame {
         // if(this.moveBoxToDownFlag) return;
         // console.log(this.nn++)
         // this.moveBoxToDownFlag = true;
+
         if (
             hitBottomBorder(this._activeBox, this._mapRef.current) ||
             hitBottomBox(this._activeBox, this._mapRef.current)
         ) {
-            addBoxtoMap(this._activeBox, this._mapRef, this._setMapRef);
-            let lines = isEliminateLine(this._mapRef);
-            if (lines.length) {
-                eliminateLine(this._mapRef, this._setMapRef, lines);
-                this._emitter.emit('eliminateLine', lines.length);
-                this._stateManagement.addScore(lines.length);
-                this._emitter.emit('addScore')
-            }
-            if (isBoxOverFlow(this._mapRef.current)) {
-                removeTicker(this.handleTicker, this);
-                this._emitter.emit('gameover');
-                return;
-            }
-            // this._activeBox = randomCreateBox();
-            // console.log('创建')
-            this.addBox();
+            this.eliminateLineHandler();
             return;
         }
         this._activeBox.y++;
-        // console.log(this.mm++)
         this._emitter.emit('moveBoxToDown');
+        this._distance--;
+
+
+        // console.log(this.mm++)
         // this.moveBoxToDownFlag = false;
+        // addBoxtoMap();
+        // console.log(getMappingModelDistance(this._activeBox, this._mapRef.current))
+
     }
     addBox() {
-        this._activeBox = this.createBoxStrategy();
+        this._activeBox = this._createBoxStrategy();
+        this._activeBoxs = [this._activeBox];
+        this._controlToDownFlag === 'teleport' && this.setShdowBox();
+    }
+    setShdowBox() {
+        this._distance = getMappingModelDistance(this._activeBox, this._mapRef.current)
+        this._activeBoxs[1] = (this._activeBox.getShadowBox(this._distance));
     }
     //惩罚插件
     addLine(): number {
@@ -259,10 +280,34 @@ export class NewGame {
         //检查左侧碰撞
         if (hitLeftBoxAndBorder(this._activeBox, this._mapRef.current)) return;
         this._activeBox.x--;
+        this._controlToDownFlag === 'teleport' && this.setShdowBox();
     }
     moveBoxToRight() {
         if (hitRightBoxAndBorder(this._activeBox, this._mapRef.current)) return;
         this._activeBox.x++;
+        this._controlToDownFlag === 'teleport' && this.setShdowBox();
+    }
+    teleportToShdowBox() {
+        this._activeBox.y += this._distance;
+    }
+    //excuate it when down key is pressed 
+    controlToDown(isRival?: boolean) {
+        switch (this._controlToDownFlag) {
+            case 'teleport':
+                this.teleportToShdowBox();
+                this._emitter.emit('controlToDown');
+                if (!isRival) this.eliminateLineHandler();
+                break;
+            case 'move':
+                this.moveBoxToDown();
+                break;
+            default:
+                break;
+        }
+    }
+    //control how blocks fall
+    setControlToDown(flag: 'teleport' | 'move') {
+        this._controlToDownFlag = flag;
     }
     //旋转插件
     rotateBox() {
@@ -274,6 +319,7 @@ export class NewGame {
         //检测box是否可以旋转
         if (isIllegalBoxInMap(boxInAdvance, this._mapRef.current)) return;
         this._activeBox.rotate(boxInAdvance.shape);
+        this._controlToDownFlag === 'teleport' && this.setShdowBox();
     }
     setBox(box: BoxType) {
         this._activeBox = box;
@@ -405,7 +451,7 @@ class TickerPlugin extends Plugin {
     }
 }
 
-//允许用户自定义核心策略：rotate,
+//是否使用用户自定义的核心策略：rotate,
 class CoreStrategyPlugin extends Plugin {
     coreStrategy: { rotate: (matrix: number[][]) => number[][], boxShapeArr: number[][][] }
     constructor(game: NewGame) {
@@ -561,9 +607,17 @@ class CoreStrategyPlugin extends Plugin {
     }
 }
 
+//控制下落方式 默认为teleport
+export class DownStrategyIsMovePlugin extends Plugin {
+    constructor(game: NewGame) {
+        super(game);
+        this.game.setControlToDown('move');
+    }
+}
 export const Plugins = {
     TickerPlugin,
-    CoreStrategyPlugin
+    CoreStrategyPlugin,
+    DownStrategyIsMovePlugin
 }
 // class Component {
 //     game: NewGame;
@@ -581,8 +635,8 @@ export const Plugins = {
 //         })
 //     }
 // }
-export class MGame extends Game {
-    constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: Function) {
+export class MGame extends NewGame {
+    constructor(mapRef: React.MutableRefObject<number[][]>, setMapRef: (_map: number[][]) => void) {
         super(mapRef, setMapRef);
         this._stateManagement = new MStateManagement();
     }

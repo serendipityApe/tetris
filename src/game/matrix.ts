@@ -1,20 +1,25 @@
 // import deepClone from "./utils/deepClone";
 
 type Points = { x: number, y: number }[]
+type XToY = Map<number,number>
 //矩阵操作相关
-export function getBoxBottomPoints(matrix: number[][]): Points {
+export function getBoxBottomPoints(matrix: number[][]): {points:Points,relativeX:number,relativeY:number} {
     //[1,1,1]
     //[1,0,0]
     //[0,0,0]  获取宏观上的所有底部点，即 [{x:0,y:1},{x:1,y:0},{x:2,y:0}]
     let row = matrix.length - 1;
     const points: any[] = [];
+    let relativeY = 0;
+    let relativeX = 0;
     let flag = new Map<number, boolean>();
     function getEffectiveLastRow(row: number) {
         matrix[row].forEach((v, j) => {
             if (matrix[row][j] > 0) {
                 if (!flag.has(j)) {
                     flag.set(j, true);
-                    points.push({ x: j, y: row })
+                    points.push({ x: j, y: row });
+                    relativeX = Math.max(relativeX, j);
+                    relativeY = Math.max(relativeY, row);
                 }
             }
         })
@@ -24,7 +29,7 @@ export function getBoxBottomPoints(matrix: number[][]): Points {
     while (points.length < matrix[0].length && --row >= 0) {
         getEffectiveLastRow(row);
     }
-    return points;
+    return {points, relativeX, relativeY};
 }
 export function getBoxTopPoints(matrix: number[][]): Points {
     //[1,1,1]
@@ -49,6 +54,54 @@ export function getBoxTopPoints(matrix: number[][]): Points {
         getEffectiveFirstRow(row);
     }
     return points;
+}
+export function getMapTopPoints(matrix: number[][]): Points {
+    //[2,2,2]
+    //[2,0,0]
+    //[-1,-1,-1]  获取宏观上的所有type为-1的顶部点，即 [{x:0,y:2},{x:1,y:2},{x:2,y:2}]
+    let row = 0;
+    const points: any[] = [];
+    let flag = new Map<number, boolean>();
+    function getEffectiveFirstRow(row: number) {
+        matrix[row].forEach((v, j) => {
+            if (v === -1) {
+                if (!flag.has(j)) {
+                    flag.set(j, true);
+                    points.push({ x: j, y: row })
+                }
+            }
+        })
+    }
+    getEffectiveFirstRow(row);
+    //如果点未获取完，向上继续检测直到获取所有点
+    while (points.length < matrix[0].length && ++row < matrix.length) {
+        getEffectiveFirstRow(row);
+    }
+    return points;
+}
+export function getMapTopXToY(matrix: number[][]): XToY {
+    //[2,2,2]
+    //[2,0,0]
+    //[-1,-1,-1]  获取宏观上的所有type为-1的顶部点，即 [{x:0,y:2},{x:1,y:2},{x:2,y:2}]
+    let row = 0;
+    var XToY = new Map();
+    let flag = new Map<number, boolean>();
+    function getEffectiveFirstRow(row: number) {
+        matrix[row].forEach((v, j) => {
+            if (v === -1) {
+                if (!flag.has(j)) {
+                    flag.set(j, true);
+                    XToY.set(j, row);
+                }
+            }
+        })
+    }
+    getEffectiveFirstRow(row);
+    //如果点未获取完，向上继续检测直到获取所有点
+    while (Object.keys(XToY).length < matrix[0].length && ++row < matrix.length) {
+        getEffectiveFirstRow(row);
+    }
+    return XToY;
 }
 export function getBoxLeftPoints(matrix: number[][]): Points {
     //[0,1,1]
