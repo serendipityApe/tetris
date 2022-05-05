@@ -176,7 +176,6 @@ export class NewGame {
     }
     setCreateBoxStrategy(strategy: Function) {
         this._createBoxStrategy = strategy;
-        console.log(this._createBoxStrategy)
     }
     registerPlugins(...Plugins: any[]) {
         Plugins.forEach(Plugin => {
@@ -252,29 +251,29 @@ export class NewGame {
         this._distance = getMappingModelDistance(this._activeBox, this._mapRef.current)
         this._activeBoxs[1] = (this._activeBox.getShadowBox(this._distance));
     }
-    //惩罚插件
-    addLine(): number {
+    addLineHandler(appointed?: number) {
         let _map: number[][] = deepClone(this._mapRef.current);
         const row = _map[0].length;
         let line = new Array(row).fill(-1);
-        let randomBlank = Math.floor(Math.random() * row);
-        line[randomBlank] = 0;
-        _map.shift();
-        _map.push(line);
-        this._setMapRef(_map);
-        console.log(randomBlank + 'randomBlank')
-        return randomBlank
-    }
-    syncAddLine(appointed: number) {
-        let _map: number[][] = deepClone(this._mapRef.current);
-        const row = _map[0].length;
-        let line = new Array(row).fill(-1);
+        if (!appointed) {
+            appointed = Math.floor(Math.random() * row);
+        }
         line[appointed] = 0;
         _map.shift();
         _map.push(line);
         this._setMapRef(_map);
-        console.log(appointed + 'appointed')
         return appointed
+    }
+    //惩罚插件
+    addLine(): number {
+        const cum = this.addLineHandler();
+        this._controlToDownFlag === 'teleport' && this.setShdowBox();
+        return cum;
+    }
+    syncAddLine(appointed: number) {
+        const cum = this.addLineHandler(appointed);
+        this._controlToDownFlag === 'teleport' && this.setShdowBox();
+        return cum;
     }
     moveBoxToLeft() {
         //检查左侧碰撞

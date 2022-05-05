@@ -69,7 +69,7 @@ export function initSelfGame(
 ) {
   initMap(setMapRef);
   selfGame = new MGame(mapRef, setMapRef);
-  selfGame.registerPlugins(Plugins.TickerPlugin,Plugins.DownStrategyIsMovePlugin);
+  selfGame.registerPlugins(Plugins.TickerPlugin,);
   player = new Player(selfGame);
 }
 
@@ -81,7 +81,7 @@ export function initRivalGame(
 ) {
   initMap(setMapRef);
   rivalGame = new MGame(mapRef, setMapRef);
-  rivalGame.registerPlugins(Plugins.DownStrategyIsMovePlugin);
+  rivalGame.registerPlugins();
   rivalPlayer = new Rival(rivalGame);
 }
 export function getRival() {

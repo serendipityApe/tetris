@@ -19,12 +19,10 @@ export class Player {
                 let penalty = randomPenaltyStrategy()
                 let cum = this._game[penalty.order].apply(this._game);
                 penalty.cum = cum;
-                console.log(penalty);
                 penaltyStrategys.push(penalty);
-                console.log(penaltyStrategys)
+                // console.log(penalty);
+                // console.log(penaltyStrategys)
             }
-            console.log(penaltyStrategys)
-            console.log(randomPenaltyStrategy())
             message.emit('penaltyStrategys', JSON.stringify(penaltyStrategys));
         });
         if (isMobile()) {
