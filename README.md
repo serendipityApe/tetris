@@ -1,18 +1,49 @@
-# tetris
-> *基于传统俄罗斯方块进行拓展，包括难度调节，主题修改，双人对战模式，手机端适配。*
+<div align="center">
 
-## 特点
+  <h2>Tetris</h2>
 
-- 无须下载，[点击即玩](http://118.195.129.130:5678/)👈
-- 狂暴模式，纵享丝滑😍
-- 双人对战，重拳出击👊
+  <p>
+    <strong>Tetris game Based on React</strong>
+  </p>
 
-## bug反馈
+  <p>
+    <img alt="React" src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=white"/>
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"/>
+    <img alt="Socket.io" src="https://img.shields.io/badge/Socket.io-010101?style=flat-square&logo=Socket.io&logoColor=white"/>
+    
+  </p>
 
-- 发送邮件到：[serendipityape@foxmail.com](mailto:serendipityape@foxmail.com)
-- [issues](https://github.com/serendipityApe/tetris/issues/new)
+  <h4>
+    <a href="http://118.195.129.130:5678/">Live Demo</a>
+    <span> | </span>
+    <a href="https://github.com/serendipityApe/tetris/blob/main/README.md">English</a>
+    <span> | </span>
+    <a href="https://github.com/serendipityApe/tetris/blob/main/README-CN.md">简体中文</a>
+  </h4>
+</div>
 
-## 下载
+### ✨ Feature
 
-1. yarn install / npm install
-2. npm run start
+- [ ] Controlled by action
+- [ ] creative workshop
+- [ ] Multiplayer mode
+- [x] Multi-terminal and multi-control mode support (PC, mobile)
+- [x] Multiple parameters can be adjusted(Ticker / Fall method / Speed / Operation mode / Theme / Rotate / tetris block)
+- [x] 2 player mode
+- [x] Dj mode
+- [x] Single mode
+
+
+### 🛠️ Install
+
+```shell
+
+// Install all dependance
+yarn install
+
+// Run
+yarn start
+
+// Build
+yarn build
+```
